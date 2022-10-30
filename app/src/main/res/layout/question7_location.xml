@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/context_location"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ema_question_textsize" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ema_mid_spacing"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_left"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/location_home"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_center"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/location_work"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_center"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/location_restaurant"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_center"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/location_vehicle"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_right"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/location_other"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+    </RadioGroup>
+
+</LinearLayout>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/context_activity"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ema_question_textsize" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ema_mid_spacing"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_working"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_sleeping"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_resting"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_watching"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_class"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_eating"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_gaming"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_conversing"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_goingbed"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_calling"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_justwokeup"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_driving"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_mid_spacing"
+            android:layout_weight="1"
+            android:background="@drawable/btn_radio_single"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="@dimen/ema_option_padding"
+            android:text="@string/activity_other"
+            android:textColor="@drawable/btn_radio_textcolor"
+            android:textSize="@dimen/ema_option_textsize" />
+
+    </RadioGroup>
+
+</LinearLayout>

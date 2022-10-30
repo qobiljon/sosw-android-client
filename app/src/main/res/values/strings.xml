@@ -1,6 +1,51 @@
 <resources>
     <string name="app_name">Stress data collection app</string>
+
     <string name="tab_dashboard">Dashboard</string>
     <string name="tab_selfreport">Self-report</string>
     <string name="new_self_report">Submit self-report</string>
+
+    <string name="frequency0">Never</string>
+    <string name="frequency1">Almost never</string>
+    <string name="frequency2">Sometimes</string>
+    <string name="frequency3">Fairly often</string>
+    <string name="frequency4">Very often</string>
+
+    <string name="stresslvl0">Not stressed</string>
+    <string name="stresslvl1">Slightly stressed</string>
+    <string name="stresslvl2">Somewhat stressed</string>
+    <string name="stresslvl3">Moderately stressed</string>
+    <string name="stresslvl4">Extremely stressed</string>
+
+    <string name="socialsettings_asocial">Asocial\n(watching TV, riding a bus)</string>
+    <string name="socialsettings_social">Social\n(conversing, in a class)</string>
+
+    <string name="location_home">Home\n(home, dorm)</string>
+    <string name="location_work">Work\n(lab, office)</string>
+    <string name="location_restaurant">Restaurant\n(restaurant, cafe, bar)</string>
+    <string name="location_vehicle">Vehicle\n(car, taxi, bus, train)</string>
+    <string name="location_other">Other\n(cinema, hotel)</string>
+
+    <string name="activity_working">Working / studying (office work, programming, homework / assignment)</string>
+    <string name="activity_sleeping">Sleeping (sleeping in bed, taking a nap)</string>
+    <string name="activity_resting">Resting / relaxing (lying / chilling in bed, doing something in phone)</string>
+    <string name="activity_watching">Video watching (watching Youtube, watching TV)</string>
+    <string name="activity_class">Class / meeting (having a meeting, taking a class)</string>
+    <string name="activity_eating">Eating and/or drinking (having a lunch or dining, drinking coffee)</string>
+    <string name="activity_gaming">Gaming (playing PC game, mobile game)</string>
+    <string name="activity_conversing">Conversing (chatting with family, taking with a friend)</string>
+    <string name="activity_goingbed">Getting ready for bed (getting ready for bed)</string>
+    <string name="activity_calling">Calling / texting (making phone call, online chatting)</string>
+    <string name="activity_justwokeup">Right after waking up (just opened eyes in bed, woke up in bed)</string>
+    <string name="activity_driving">Driving (driving a car, riding a bicycle)</string>
+    <string name="activity_other">Other (getting haircut, getting an endoscopy)</string>
+
+    <string name="pss_control">1. How often have you felt that you were unable to control the important things?</string>
+    <string name="pss_confident">2. How often have you felt confident about your ability to handle problems?</string>
+    <string name="pss_yourway">3. How often did you feel that things were going your way?</string>
+    <string name="pss_difficulties">4. How often did you feel that difficulties were piling up so high that you could not overcome them?</string>
+    <string name="likert_stresslvl">5. Please rate your current perceived stress level.</string>
+    <string name="context_socialsettings">6. Please report your current social settings.</string>
+    <string name="context_location">7. Please report your current location.</string>
+    <string name="context_activity">8. Please report your current activity.</string>
 </resources>
