@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingVertical="@dimen/ema_box_spacing">
+        android:paddingBottom="@dimen/ema_box_spacing">
 
         <include
             layout="@layout/question1_control"
