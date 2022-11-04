@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/q6_context_socialsettings"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ema_question_textsize" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/ema_mid_spacing"
+        android:background="#888" />
+
+    <RadioGroup
+        android:id="@+id/rgQuestion6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ema_mid_spacing">
+
+        <RadioButton
+            android:id="@+id/rbAsocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/socialsettings_asocial" />
+
+        <RadioButton
+            android:id="@+id/rbSocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/socialsettings_social" />
+
+    </RadioGroup>
+
+</LinearLayout>

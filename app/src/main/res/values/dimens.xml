@@ -8,7 +8,7 @@
 
     <dimen name="ema_question_spacing">24dp</dimen>
     <dimen name="ema_question_padding">12dp</dimen>
-    <dimen name="ema_question_textsize">16sp</dimen>
+    <dimen name="ema_question_textsize">20sp</dimen>
     <dimen name="ema_mid_spacing">6dp</dimen>
     <dimen name="ema_option_textsize">10sp</dimen>
     <dimen name="ema_option_padding">4dp</dimen>
