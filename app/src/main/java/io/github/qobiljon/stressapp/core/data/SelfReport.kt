@@ -1,13 +1,18 @@
 package io.github.qobiljon.stressapp.core.data
 
-class SelfReport(
-    val timestamp: Long,
-    val pss_control: Int,
-    val pss_confident: Int,
-    val pss_yourway: Int,
-    val pss_difficulties: Int,
-    val stresslvl: Int,
-    val social_settings: String,
-    val location: String,
-    val activity: String,
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class SelfReport(
+    @PrimaryKey val timestamp: Long,
+    @ColumnInfo(name = "pss_control") val pss_control: Int,
+    @ColumnInfo(name = "pss_confident") val pss_confident: Int,
+    @ColumnInfo(name = "pss_yourway") val pss_yourway: Int,
+    @ColumnInfo(name = "pss_difficulties") val pss_difficulties: Int,
+    @ColumnInfo(name = "stresslvl") val stresslvl: Int,
+    @ColumnInfo(name = "social_settings") val social_settings: String,
+    @ColumnInfo(name = "location") val location: String,
+    @ColumnInfo(name = "activity") val activity: String,
 )

@@ -3,14 +3,46 @@ package io.github.qobiljon.stressapp.utils
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.room.Room
+import io.github.qobiljon.stressapp.R
+import io.github.qobiljon.stressapp.core.data.AppDatabase
+import io.github.qobiljon.stressapp.core.data.SelfReport
+import kotlinx.coroutines.runBlocking
 
 object Storage {
     private const val KEY_PREFS_NAME = "shared_prefs"
     private const val KEY_FULL_NAME = "full_name"
     private const val KEY_DATE_OF_BIRTH = "date_of_birth"
 
+    private lateinit var db: AppDatabase
+
     private fun getSharedPreferences(context: Context): SharedPreferences {
         return context.getSharedPreferences(KEY_PREFS_NAME, Context.MODE_PRIVATE)
+    }
+
+    fun init(context: Context) {
+        db = Room.databaseBuilder(context, AppDatabase::class.java, context.getString(R.string.room_db_name))
+            .allowMainThreadQueries()
+            .build()
+    }
+
+    fun syncToCloud(context: Context) {
+        var stop = false
+
+        val selfReportDao = db.selfReportDao()
+        for (selfReport in selfReportDao.getAll()) {
+            runBlocking {
+                val success = Api.submitEMA(
+                    context,
+                    fullName = getFullName(context),
+                    dateOfBirth = getDateOfBirth(context),
+                    selfReport = selfReport,
+                )
+                if (success) selfReportDao.delete(selfReport)
+                else stop = true
+            }
+            if (stop) return
+        }
     }
 
     fun isAuthenticated(context: Context): Boolean {
@@ -37,18 +69,7 @@ object Storage {
         }
     }
 
-    fun saveEMA(
-        context: Context,
-        timestamp: Long,
-        pss_control: Int,
-        pss_confident: Int,
-        pss_yourway: Int,
-        pss_difficulties: Int,
-        stresslvl: Int,
-        social_settings: String,
-        location: String,
-        activity: String,
-    ) {
-        // todo do dis
+    fun saveSelfReport(selfReport: SelfReport) {
+        db.selfReportDao().insertAll(selfReport)
     }
 }

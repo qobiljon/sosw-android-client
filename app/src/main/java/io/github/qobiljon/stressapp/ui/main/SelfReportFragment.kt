@@ -1,12 +1,12 @@
 package io.github.qobiljon.stressapp.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import io.github.qobiljon.stressapp.R
+import io.github.qobiljon.stressapp.core.data.SelfReport
 import io.github.qobiljon.stressapp.utils.Api
 import io.github.qobiljon.stressapp.utils.Storage
 import kotlinx.coroutines.launch
@@ -34,8 +34,6 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
 
         rgQuestions.forEach { rg ->
             rg.setOnCheckedChangeListener { _, i ->
-                Log.e("", "${rg.id} - $i")
-
                 var readyToSubmit = true
                 for (_rg in rgQuestions) {
                     readyToSubmit = _rg.checkedRadioButtonId != -1
@@ -88,19 +86,26 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
             runBlocking {
                 launch {
                     val context = requireActivity().applicationContext
-                    Api.submitEMA(
-                        context = context,
-                        fullName = Storage.getFullName(context),
-                        dateOfBirth = Storage.getDateOfBirth(context),
-                        pssControl = q1to5[0],
-                        pssConfident = q1to5[1],
-                        pssYourWay = q1to5[2],
-                        pssDifficulties = q1to5[3],
-                        stressLvl = q1to5[4],
-                        socialSettings = socialSettings,
+                    val selfReport = SelfReport(
+                        timestamp = System.currentTimeMillis(),
+                        pss_control = q1to5[0],
+                        pss_confident = q1to5[1],
+                        pss_yourway = q1to5[2],
+                        pss_difficulties = q1to5[3],
+                        stresslvl = q1to5[4],
+                        social_settings = socialSettings,
                         location = location,
                         activity = activity,
                     )
+                    val success = Api.submitEMA(
+                        context = context,
+                        fullName = Storage.getFullName(context),
+                        dateOfBirth = Storage.getDateOfBirth(context),
+                        selfReport = selfReport,
+                    )
+                    if (success) Storage.syncToCloud(context)
+                    else Storage.saveSelfReport(selfReport)
+                    cleanUp()
                 }
             }
         }
