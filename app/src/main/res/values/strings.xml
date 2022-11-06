@@ -8,6 +8,8 @@
     <string name="room_db_name" translatable="false">app-database</string>
 
     <!-- Auth page details -->
+    <string name="full_name">Full name</string>
+    <string name="date_of_birth">Date of birth</string>
     <string name="dummy_name" translatable="false">홍길동</string>
     <string name="date_of_birth_format" translatable="false">YYYYMMDD</string>
 
