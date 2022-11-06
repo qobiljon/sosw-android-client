@@ -1,6 +1,5 @@
 package io.github.qobiljon.stressapp.extensions
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -22,8 +21,19 @@ class FCMInstanceIDService : FirebaseMessagingService() {
         private const val NOTIFICATION_CHANNEL_NAME = "sosw_app_push"
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
-    fun generateNotification() {
+    override fun onNewToken(token: String) {
+        Storage.setFCMToken(applicationContext, fcmToken = token)
+        if (Storage.isAuthenticated(applicationContext)) runBlocking {
+            Api.authenticate(
+                applicationContext,
+                fullName = Storage.getFullName(applicationContext),
+                dateOfBirth = Storage.getDateOfBirth(applicationContext),
+                fcmToken = token,
+            )
+        }
+    }
+
+    override fun onMessageReceived(message: RemoteMessage) {
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -40,21 +50,5 @@ class FCMInstanceIDService : FirebaseMessagingService() {
         notificationManager.createNotificationChannel(notificationChannel)
 
         notificationManager.notify(0, builder.build())
-    }
-
-    override fun onNewToken(token: String) {
-        Storage.setFCMToken(applicationContext, fcmToken = token)
-        if (Storage.isAuthenticated(applicationContext)) runBlocking {
-            Api.authenticate(
-                applicationContext,
-                fullName = Storage.getFullName(applicationContext),
-                dateOfBirth = Storage.getDateOfBirth(applicationContext),
-                fcmToken = token,
-            )
-        }
-    }
-
-    override fun onMessageReceived(message: RemoteMessage) {
-        generateNotification()
     }
 }
