@@ -22,7 +22,7 @@ object Api {
                 fcm_token = fcmToken,
             )
         )
-        return result.errorBody() != null
+        return result.errorBody() == null
     }
 
     suspend fun submitEMA(context: Context, fullName: String, dateOfBirth: String, selfReport: SelfReport): Boolean {
