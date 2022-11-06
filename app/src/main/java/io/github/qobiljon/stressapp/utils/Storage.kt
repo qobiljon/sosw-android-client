@@ -26,6 +26,8 @@ object Storage {
     }
 
     fun syncToCloud(context: Context) {
+        if (!isAuthenticated(context)) return
+
         var stop = false
 
         val selfReportDao = db.selfReportDao()
