@@ -6,6 +6,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
 
+    <dimen name="auth_box_margin">24dp</dimen>
+
     <dimen name="ema_question_spacing">24dp</dimen>
     <dimen name="ema_question_padding">12dp</dimen>
     <dimen name="ema_question_textsize">20sp</dimen>

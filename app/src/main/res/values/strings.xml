@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Stress data collection app</string>
 
+    <!-- API urls -->
+    <string name="api_base_url" translatable="false">http://172.30.1.77:8000/api/</string>
+
+    <!-- Auth page details -->
+    <string name="dummy_name" translatable="false">홍길동</string>
+    <string name="date_of_birth_format" translatable="false">YYYYMMDD</string>
+
     <string name="tab_dashboard">Dashboard</string>
     <string name="tab_selfreport">Self-report</string>
     <string name="new_self_report">Submit self-report</string>
@@ -50,4 +57,8 @@
     <string name="q7_context_location">7. Please report your current location.</string>
     <string name="q8_context_activity">8. Please report your current activity.</string>
     <string name="submit">Submit</string>
+
+    <string name="authenticate">Authenticate</string>
+    <string name="auth_success">Authenticated successfully</string>
+    <string name="auth_failure">Failed to authenticate, please check your internet connection!</string>
 </resources>

@@ -7,7 +7,10 @@ import android.widget.Button
 import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import io.github.qobiljon.stressapp.R
-import io.github.qobiljon.stressapp.utils.Sync
+import io.github.qobiljon.stressapp.utils.Api
+import io.github.qobiljon.stressapp.utils.Storage
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
@@ -52,12 +55,12 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
                 R.id.rbFrequency4 -> 4
                 else -> -1
             }
-            val q6 = when (rgQuestions[5].checkedRadioButtonId) {
+            val socialSettings = when (rgQuestions[5].checkedRadioButtonId) {
                 R.id.rbSocial -> "social"
                 R.id.rbAsocial -> "asocial"
                 else -> ""
             }
-            val q7 = when (rgQuestions[6].checkedRadioButtonId) {
+            val location = when (rgQuestions[6].checkedRadioButtonId) {
                 R.id.rbLocationhome -> "home"
                 R.id.rbLocationwork -> "work"
                 R.id.rbLocationrestaurant -> "restaurant"
@@ -65,7 +68,7 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
                 R.id.rbLocationother -> "other"
                 else -> ""
             }
-            val q8 = when (rgQuestions[7].checkedRadioButtonId) {
+            val activity = when (rgQuestions[7].checkedRadioButtonId) {
                 R.id.rbActivitystudying -> "studying_working"
                 R.id.rbActivitysleeping -> "sleeping"
                 R.id.rbActivityrelaxing -> "relaxing"
@@ -82,7 +85,24 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
                 else -> ""
             }
 
-            Sync.submitEMA(q1 = q1to5[0], q2 = q1to5[1], q3 = q1to5[2], q4 = q1to5[3], q5 = q1to5[4], q6 = q6, q7 = q7, q8 = q8)
+            runBlocking {
+                launch {
+                    val context = requireActivity().applicationContext
+                    Api.submitEMA(
+                        context = context,
+                        fullName = Storage.getFullName(context),
+                        dateOfBirth = Storage.getDateOfBirth(context),
+                        pssControl = q1to5[0],
+                        pssConfident = q1to5[1],
+                        pssYourWay = q1to5[2],
+                        pssDifficulties = q1to5[3],
+                        stressLvl = q1to5[4],
+                        socialSettings = socialSettings,
+                        location = location,
+                        activity = activity,
+                    )
+                }
+            }
         }
     }
 
