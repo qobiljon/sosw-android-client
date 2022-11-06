@@ -13,6 +13,7 @@ object Storage {
     private const val KEY_PREFS_NAME = "shared_prefs"
     private const val KEY_FULL_NAME = "full_name"
     private const val KEY_DATE_OF_BIRTH = "date_of_birth"
+    private const val KEY_FCM_TOKEN = "fcm_token"
 
     private lateinit var db: AppDatabase
 
@@ -21,9 +22,7 @@ object Storage {
     }
 
     fun init(context: Context) {
-        db = Room.databaseBuilder(context, AppDatabase::class.java, context.getString(R.string.room_db_name))
-            .allowMainThreadQueries()
-            .build()
+        db = Room.databaseBuilder(context, AppDatabase::class.java, context.getString(R.string.room_db_name)).allowMainThreadQueries().build()
     }
 
     fun syncToCloud(context: Context) {
@@ -57,6 +56,10 @@ object Storage {
         return getSharedPreferences(context).getString(KEY_DATE_OF_BIRTH, null)!!
     }
 
+    fun getFCMToken(context: Context): String {
+        return getSharedPreferences(context).getString(KEY_FCM_TOKEN, null)!!
+    }
+
     fun setFullName(context: Context, fullName: String) {
         getSharedPreferences(context).edit {
             putString(KEY_FULL_NAME, fullName)
@@ -66,6 +69,12 @@ object Storage {
     fun setDateOfBirth(context: Context, dateOfBirth: String) {
         getSharedPreferences(context).edit {
             putString(KEY_DATE_OF_BIRTH, dateOfBirth)
+        }
+    }
+
+    fun setFCMToken(context: Context, fcmToken: String) {
+        getSharedPreferences(context).edit {
+            putString(KEY_FCM_TOKEN, fcmToken)
         }
     }
 

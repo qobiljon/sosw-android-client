@@ -24,7 +24,12 @@ class AuthActivity : AppCompatActivity() {
             val dateOfBirth = etDateOfBirth.text.toString()
             if (fullName.length >= 3 && Utils.validDate(dateOfBirth)) {
                 lifecycleScope.launch {
-                    val success = Api.authenticate(applicationContext, fullName = fullName, dateOfBirth = dateOfBirth)
+                    val success = Api.authenticate(
+                        applicationContext,
+                        fullName = fullName,
+                        dateOfBirth = dateOfBirth,
+                        fcmToken = Storage.getFCMToken(applicationContext),
+                    )
                     if (success) {
                         Storage.setFullName(applicationContext, fullName = fullName)
                         Storage.setDateOfBirth(applicationContext, dateOfBirth = dateOfBirth)

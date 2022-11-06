@@ -14,11 +14,12 @@ object Api {
         return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(context.getString(R.string.api_base_url)).build().create(ApiInterface::class.java)
     }
 
-    suspend fun authenticate(context: Context, fullName: String, dateOfBirth: String): Boolean {
+    suspend fun authenticate(context: Context, fullName: String, dateOfBirth: String, fcmToken: String): Boolean {
         val result = getApiInterface(context).authenticate(
             AuthRequest(
                 full_name = fullName,
                 date_of_birth = dateOfBirth,
+                fcm_token = fcmToken,
             )
         )
         return result.errorBody() != null

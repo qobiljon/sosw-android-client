@@ -64,4 +64,7 @@
     <string name="authenticate">Authenticate</string>
     <string name="auth_success">Authenticated successfully</string>
     <string name="auth_failure">Failed to authenticate, please check your internet connection!</string>
+
+    <string name="push_title">Stress report time!</string>
+    <string name="push_prompt">Please log your current situation and stress levels.</string>
 </resources>

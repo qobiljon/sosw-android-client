@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "972376765842",
+    "project_id": "stress-data-collection",
+    "storage_bucket": "stress-data-collection.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972376765842:android:b81837d63569485ef07d4b",
+        "android_client_info": {
+          "package_name": "io.github.qobiljon.stressapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972376765842-1jogp4pbcpuqdmdbt4f973o8ija1353a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUBrEWYGIBWOX36nxQ7PQfrONCjO2aW0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972376765842-1jogp4pbcpuqdmdbt4f973o8ija1353a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
