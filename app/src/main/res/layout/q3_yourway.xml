@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/q3_pss_yourway"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ema_question_textsize" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/ema_mid_spacing"
+        android:background="#888" />
+
+    <RadioGroup
+        android:id="@+id/rgQuestion3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ema_mid_spacing">
+
+        <RadioButton
+            android:id="@+id/rbFrequency0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/frequency0" />
+
+        <RadioButton
+            android:id="@+id/rbFrequency1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/frequency1" />
+
+        <RadioButton
+            android:id="@+id/rbFrequency2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/frequency2" />
+
+        <RadioButton
+            android:id="@+id/rbFrequency3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/frequency3" />
+
+        <RadioButton
+            android:id="@+id/rbFrequency4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/frequency4" />
+
+    </RadioGroup>
+
+</LinearLayout>

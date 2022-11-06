@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/q5_likert_stresslvl"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ema_question_textsize" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/ema_mid_spacing"
+        android:background="#888" />
+
+    <RadioGroup
+        android:id="@+id/rgQuestion5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ema_mid_spacing">
+
+        <RadioButton
+            android:id="@+id/rbStresslvl0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/stresslvl0" />
+
+        <RadioButton
+            android:id="@+id/rbStresslvl1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/stresslvl1" />
+
+        <RadioButton
+            android:id="@+id/rbStresslvl2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/stresslvl2" />
+
+        <RadioButton
+            android:id="@+id/rbStresslvl3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/stresslvl3" />
+
+        <RadioButton
+            android:id="@+id/rbStresslvl4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/stresslvl4" />
+
+    </RadioGroup>
+
+</LinearLayout>

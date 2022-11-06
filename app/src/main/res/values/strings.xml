@@ -1,5 +1,70 @@
 <resources>
-    <string name="app_name">StressDataCollector</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="app_name">Stress data collection app</string>
+
+    <!-- API urls -->
+    <string name="api_base_url" translatable="false">http://172.30.1.77:8000/api/</string>
+
+    <!-- Room -->
+    <string name="room_db_name" translatable="false">app-database</string>
+
+    <!-- Auth page details -->
+    <string name="dummy_name" translatable="false">홍길동</string>
+    <string name="date_of_birth_format" translatable="false">YYYYMMDD</string>
+
+    <string name="tab_dashboard">Dashboard</string>
+    <string name="tab_selfreport">Self-report</string>
+    <string name="new_self_report">Submit self-report</string>
+
+    <string name="frequency0">Never</string>
+    <string name="frequency1">Almost never</string>
+    <string name="frequency2">Sometimes</string>
+    <string name="frequency3">Fairly often</string>
+    <string name="frequency4">Very often</string>
+    <string name="na">N/A</string>
+
+    <string name="stresslvl0">Not stressed</string>
+    <string name="stresslvl1">Slightly stressed</string>
+    <string name="stresslvl2">Somewhat stressed</string>
+    <string name="stresslvl3">Moderately stressed</string>
+    <string name="stresslvl4">Extremely stressed</string>
+
+    <string name="socialsettings_asocial">👤 Asocial (watching TV, riding a bus)</string>
+    <string name="socialsettings_social">👥 Social (conversing, in a class)</string>
+
+    <string name="location_home">🏠 Home (home, dorm)</string>
+    <string name="location_work">🏢 Work (lab, office)</string>
+    <string name="location_restaurant">🍽️ Restaurant (restaurant, cafe, bar)</string>
+    <string name="location_vehicle">🚗🚌 Vehicle (car, taxi, bus, train)</string>
+    <string name="location_other">Other (cinema, hotel)</string>
+
+    <string name="activity_working">📚 Studying/working (doing assignment, lab work)</string>
+    <string name="activity_sleeping">😴 Sleeping (sleeping in bed, taking a nap)</string>
+    <string name="activity_resting">🧘 Relaxing (chilling in bed, using smartphone)</string>
+    <string name="activity_watching">🎦 Video watching (watching Youtube, watching TV)</string>
+    <string name="activity_class">👩‍🏫 Class/meeting (having a meeting, taking a class)</string>
+    <string name="activity_eating">🍽️☕️ Eating and/or drinking (lunch/dining, drinking coffee)</string>
+    <string name="activity_gaming">🎮 Gaming (playing PC game, mobile game)</string>
+    <string name="activity_conversing">👥 Conversing (chatting with family, taking with a friend)</string>
+    <string name="activity_goingbed">🛏️ Getting ready for bed (getting ready for bed)</string>
+    <string name="activity_calling">💬 Calling/texting (making phone call, online chatting)</string>
+    <string name="activity_justwokeup">⏰ Right after waking up (just opened eyes in bed)</string>
+    <string name="activity_driving">🚲🚗 Driving (driving a car, riding a bicycle)</string>
+    <string name="activity_other">Other (getting haircut, getting an endoscopy)</string>
+
+    <string name="q1_pss_control">1. How often have you felt that you were unable to control the important things?</string>
+    <string name="q2_pss_confident">2. How often have you felt confident about your ability to handle problems?</string>
+    <string name="q3_pss_yourway">3. How often did you feel that things were going your way?</string>
+    <string name="q4_pss_difficulties">4. How often did you feel that difficulties were piling up so high that you could not overcome them?</string>
+    <string name="q5_likert_stresslvl">5. Please rate your current perceived stress level.</string>
+    <string name="q6_context_socialsettings">6. Please report your current social settings.</string>
+    <string name="q7_context_location">7. Please report your current location.</string>
+    <string name="q8_context_activity">8. Please report your current activity.</string>
+    <string name="submit">Submit</string>
+
+    <string name="authenticate">Authenticate</string>
+    <string name="auth_success">Authenticated successfully</string>
+    <string name="auth_failure">Failed to authenticate, please check your internet connection!</string>
+
+    <string name="push_title">Stress report time!</string>
+    <string name="push_prompt">Please log your current situation and stress levels.</string>
 </resources>
