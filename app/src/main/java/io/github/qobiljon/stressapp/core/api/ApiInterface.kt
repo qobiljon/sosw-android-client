@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 interface ApiInterface {
     @POST("auth")
-    suspend fun authenticate(@Body request: AuthRequest): Response<Void>
+    suspend fun authenticate(@Body request: AuthRequest): Response<EmptyResponse>
 
     @POST("submit_ema")
     suspend fun submitSelfReport(@Body submitSelfReportRequest: SubmitSelfReportRequest): Response<BasicResponse>
