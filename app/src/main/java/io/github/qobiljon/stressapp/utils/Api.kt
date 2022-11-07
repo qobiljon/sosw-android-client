@@ -8,6 +8,7 @@ import io.github.qobiljon.stressapp.core.api.requests.SubmitSelfReportRequest
 import io.github.qobiljon.stressapp.core.data.SelfReport
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.ConnectException
 
 object Api {
     private fun getApiInterface(context: Context): ApiInterface {
@@ -15,17 +16,21 @@ object Api {
     }
 
     suspend fun authenticate(context: Context, fullName: String, dateOfBirth: String, fcmToken: String): Boolean {
-        val result = getApiInterface(context).authenticate(
-            AuthRequest(
-                full_name = fullName,
-                date_of_birth = dateOfBirth,
-                fcm_token = fcmToken,
+        return try {
+            val result = getApiInterface(context).authenticate(
+                AuthRequest(
+                    full_name = fullName,
+                    date_of_birth = dateOfBirth,
+                    fcm_token = fcmToken,
+                )
             )
-        )
-        return result.errorBody() == null
+            result.errorBody() == null && result.isSuccessful
+        } catch (e: ConnectException) {
+            false
+        }
     }
 
-    suspend fun submitEMA(context: Context, fullName: String, dateOfBirth: String, selfReports: List<SelfReport>): Boolean {
+    suspend fun submitSelfReport(context: Context, fullName: String, dateOfBirth: String, selfReports: List<SelfReport>): Boolean {
         return try {
             val result = getApiInterface(context).submitSelfReport(
                 SubmitSelfReportRequest(
@@ -35,7 +40,7 @@ object Api {
                 )
             )
             result.errorBody() == null && result.isSuccessful
-        } catch (e: Exception) {
+        } catch (e: ConnectException) {
             false
         }
     }

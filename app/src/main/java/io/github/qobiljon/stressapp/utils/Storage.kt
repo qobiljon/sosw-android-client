@@ -33,7 +33,7 @@ object Storage {
         val selfReportDao = db.selfReportDao()
         val allSelfReports = selfReportDao.getAll()
         runBlocking {
-            val success = Api.submitEMA(
+            val success = Api.submitSelfReport(
                 context,
                 fullName = getFullName(context),
                 dateOfBirth = getDateOfBirth(context),

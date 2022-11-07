@@ -97,7 +97,7 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
                         location = location,
                         activity = activity,
                     )
-                    val success = Api.submitEMA(
+                    val success = Api.submitSelfReport(
                         context = context,
                         fullName = Storage.getFullName(context),
                         dateOfBirth = Storage.getDateOfBirth(context),
