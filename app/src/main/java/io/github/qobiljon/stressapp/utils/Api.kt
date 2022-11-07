@@ -9,6 +9,7 @@ import io.github.qobiljon.stressapp.core.data.SelfReport
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.ConnectException
+import java.net.SocketException
 
 object Api {
     private fun getApiInterface(context: Context): ApiInterface {
@@ -27,6 +28,8 @@ object Api {
             result.errorBody() == null && result.isSuccessful
         } catch (e: ConnectException) {
             false
+        } catch (e: SocketException) {
+            false
         }
     }
 
@@ -41,6 +44,8 @@ object Api {
             )
             result.errorBody() == null && result.isSuccessful
         } catch (e: ConnectException) {
+            false
+        } catch (e: SocketException) {
             false
         }
     }
