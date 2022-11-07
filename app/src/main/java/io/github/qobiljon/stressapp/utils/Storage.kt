@@ -15,6 +15,7 @@ object Storage {
     private const val KEY_FULL_NAME = "full_name"
     private const val KEY_DATE_OF_BIRTH = "date_of_birth"
     private const val KEY_FCM_TOKEN = "fcm_token"
+    private const val BATCH_SUBMIT_AMOUNT = 100
 
     private lateinit var db: AppDatabase
 
@@ -33,13 +34,20 @@ object Storage {
             val selfReportDao = db.selfReportDao()
             launch {
                 val allSelfReportData = selfReportDao.getAll()
-                val success = Api.submitSelfReport(
-                    context,
-                    fullName = getFullName(context),
-                    dateOfBirth = getDateOfBirth(context),
-                    selfReports = allSelfReportData,
-                )
-                if (success) allSelfReportData.forEach { selfReportDao.delete(it) }
+                var idx = 0
+                while (idx < allSelfReportData.size) {
+                    val chunk = allSelfReportData.subList(idx, minOf(idx + BATCH_SUBMIT_AMOUNT, allSelfReportData.size))
+                    val success = Api.submitSelfReport(
+                        context,
+                        fullName = getFullName(context),
+                        dateOfBirth = getDateOfBirth(context),
+                        selfReports = chunk,
+                    )
+                    if (success) chunk.forEach { selfReportDao.delete(it) }
+                    else break
+
+                    idx += BATCH_SUBMIT_AMOUNT
+                }
             }
         }
     }
