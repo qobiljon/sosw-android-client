@@ -46,6 +46,9 @@ class AuthActivity : AppCompatActivity() {
                         setResult(1)
                     }
                 }
+            } else {
+                btnAuthenticate.isEnabled = true
+                Utils.toast(applicationContext, getString(R.string.input_failure))
             }
         }
     }
