@@ -25,13 +25,13 @@ object Api {
         return result.errorBody() == null
     }
 
-    suspend fun submitEMA(context: Context, fullName: String, dateOfBirth: String, selfReport: SelfReport): Boolean {
+    suspend fun submitEMA(context: Context, fullName: String, dateOfBirth: String, selfReports: List<SelfReport>): Boolean {
         return try {
             val result = getApiInterface(context).submitSelfReport(
                 SubmitSelfReportRequest(
                     full_name = fullName,
                     date_of_birth = dateOfBirth,
-                    self_report = selfReport,
+                    self_reports = selfReports,
                 )
             )
             result.errorBody() == null && result.isSuccessful
