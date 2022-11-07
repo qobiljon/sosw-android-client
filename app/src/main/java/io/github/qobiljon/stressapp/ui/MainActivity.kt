@@ -7,12 +7,14 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
 import io.github.qobiljon.stressapp.R
+import io.github.qobiljon.stressapp.services.DataSubmissionService
 import io.github.qobiljon.stressapp.ui.main.SectionsPagerAdapter
 import io.github.qobiljon.stressapp.utils.Storage
 
 class MainActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_CODE_AUTH = 102
+        const val TAG = "StressApp"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun runServices() {
-
+        startForegroundService(Intent(applicationContext, DataSubmissionService::class.java))
     }
 }

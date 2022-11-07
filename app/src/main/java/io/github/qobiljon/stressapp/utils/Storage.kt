@@ -7,6 +7,7 @@ import androidx.room.Room
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.data.AppDatabase
 import io.github.qobiljon.stressapp.core.data.SelfReport
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 object Storage {
@@ -28,21 +29,19 @@ object Storage {
     fun syncToCloud(context: Context) {
         if (!isAuthenticated(context)) return
 
-        var stop = false
-
-        val selfReportDao = db.selfReportDao()
-        val allSelfReports = selfReportDao.getAll()
         runBlocking {
-            val success = Api.submitSelfReport(
-                context,
-                fullName = getFullName(context),
-                dateOfBirth = getDateOfBirth(context),
-                selfReports = allSelfReports,
-            )
-            if (success) allSelfReports.forEach { selfReportDao.delete(it) }
-            else stop = true
+            val selfReportDao = db.selfReportDao()
+            launch {
+                val allSelfReportData = selfReportDao.getAll()
+                val success = Api.submitSelfReport(
+                    context,
+                    fullName = getFullName(context),
+                    dateOfBirth = getDateOfBirth(context),
+                    selfReports = allSelfReportData,
+                )
+                if (success) allSelfReportData.forEach { selfReportDao.delete(it) }
+            }
         }
-        if (stop) return
     }
 
     fun isAuthenticated(context: Context): Boolean {

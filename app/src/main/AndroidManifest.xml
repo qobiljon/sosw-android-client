@@ -35,6 +35,10 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name="io.github.qobiljon.stressapp.services.DataSubmissionService"
+            android:exported="false" />
+
         <activity
             android:name=".ui.AuthActivity"
             android:exported="false" />

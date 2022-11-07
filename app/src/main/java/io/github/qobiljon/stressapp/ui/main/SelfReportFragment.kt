@@ -103,8 +103,7 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
                         dateOfBirth = Storage.getDateOfBirth(context),
                         selfReports = listOf(selfReport),
                     )
-                    if (success) Storage.syncToCloud(context)
-                    else Storage.saveSelfReport(selfReport)
+                    if (!success) Storage.saveSelfReport(selfReport)
                     cleanUp()
                 }
             }

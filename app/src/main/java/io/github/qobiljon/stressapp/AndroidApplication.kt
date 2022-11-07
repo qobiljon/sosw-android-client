@@ -16,7 +16,5 @@ class AndroidApplication : Application() {
             val token = task.result
             Storage.setFCMToken(applicationContext, fcmToken = token)
         })
-
-        Storage.syncToCloud(applicationContext)
     }
 }
