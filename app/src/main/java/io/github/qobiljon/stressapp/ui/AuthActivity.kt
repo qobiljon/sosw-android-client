@@ -20,6 +20,7 @@ class AuthActivity : AppCompatActivity() {
         val etDateOfBirth = findViewById<EditText>(R.id.etDateOfBirth)
         val btnAuthenticate = findViewById<Button>(R.id.btnAuthenticate)
         btnAuthenticate.setOnClickListener {
+            btnAuthenticate.isEnabled = false
             val fullName = etFullName.text.toString()
             val dateOfBirth = etDateOfBirth.text.toString()
             if (fullName.length >= 3 && Utils.validDate(dateOfBirth)) {
@@ -33,13 +34,16 @@ class AuthActivity : AppCompatActivity() {
                     if (success) {
                         Storage.setFullName(applicationContext, fullName = fullName)
                         Storage.setDateOfBirth(applicationContext, dateOfBirth = dateOfBirth)
+
                         Utils.toast(applicationContext, getString(R.string.auth_success))
+
+                        btnAuthenticate.isEnabled = true
                         setResult(0)
                         finish()
                     } else {
                         Utils.toast(applicationContext, getString(R.string.auth_failure))
+                        btnAuthenticate.isEnabled = true
                         setResult(1)
-                        finish()
                     }
                 }
             }

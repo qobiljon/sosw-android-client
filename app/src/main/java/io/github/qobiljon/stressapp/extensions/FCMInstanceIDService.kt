@@ -37,13 +37,14 @@ class FCMInstanceIDService : FirebaseMessagingService() {
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-        val builder = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_stress_app)
-            .setAutoCancel(false)
-            .setVibrate(longArrayOf(1000, 1000, 1000, 1000))
-            .setOnlyAlertOnce(false)
-            .setContentIntent(PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE))
-            .setContent(RemoteViews("io.github.qobiljon.stressapp", R.layout.push_notification))
+        val builder = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID).setSmallIcon(R.drawable.ic_self_report).setAutoCancel(false).setVibrate(longArrayOf(1000, 1000, 1000, 1000)).setOnlyAlertOnce(false).setContentIntent(
+            PendingIntent.getActivity(
+                applicationContext,
+                0,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE,
+            )
+        ).setContent(RemoteViews("io.github.qobiljon.stressapp", R.layout.push_notification))
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)

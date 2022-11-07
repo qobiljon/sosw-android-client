@@ -26,22 +26,23 @@ object Storage {
     }
 
     fun syncToCloud(context: Context) {
+        if (!isAuthenticated(context)) return
+
         var stop = false
 
         val selfReportDao = db.selfReportDao()
-        for (selfReport in selfReportDao.getAll()) {
-            runBlocking {
-                val success = Api.submitEMA(
-                    context,
-                    fullName = getFullName(context),
-                    dateOfBirth = getDateOfBirth(context),
-                    selfReport = selfReport,
-                )
-                if (success) selfReportDao.delete(selfReport)
-                else stop = true
-            }
-            if (stop) return
+        val allSelfReports = selfReportDao.getAll()
+        runBlocking {
+            val success = Api.submitSelfReport(
+                context,
+                fullName = getFullName(context),
+                dateOfBirth = getDateOfBirth(context),
+                selfReports = allSelfReports,
+            )
+            if (success) allSelfReports.forEach { selfReportDao.delete(it) }
+            else stop = true
         }
+        if (stop) return
     }
 
     fun isAuthenticated(context: Context): Boolean {
