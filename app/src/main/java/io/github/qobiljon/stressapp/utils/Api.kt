@@ -42,7 +42,7 @@ object Api {
                     self_reports = selfReports,
                 )
             )
-            result.errorBody() == null && result.isSuccessful
+            result.errorBody() == null && result.isSuccessful && result.body()?.success == true
         } catch (e: ConnectException) {
             false
         } catch (e: SocketTimeoutException) {
