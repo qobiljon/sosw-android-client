@@ -10,6 +10,9 @@ interface SelfReportDao {
     @Query("SELECT * FROM selfreport;")
     fun getAll(): List<SelfReport>
 
+    @Query("SELECT * FROM selfreport ORDER BY timestamp ASC LIMIT :k")
+    fun getK(k: Int): List<SelfReport>
+
     @Insert
     fun insertAll(vararg users: SelfReport)
 

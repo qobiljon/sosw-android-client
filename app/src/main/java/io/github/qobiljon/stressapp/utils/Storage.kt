@@ -33,10 +33,11 @@ object Storage {
         runBlocking {
             val selfReportDao = db.selfReportDao()
             launch {
-                val allSelfReportData = selfReportDao.getAll()
-                var idx = 0
-                while (idx < allSelfReportData.size) {
-                    val chunk = allSelfReportData.subList(idx, minOf(idx + BATCH_SUBMIT_AMOUNT, allSelfReportData.size))
+                var chunk: List<SelfReport>
+                do {
+                    chunk = selfReportDao.getK(k = BATCH_SUBMIT_AMOUNT)
+                    if (chunk.isEmpty()) break
+
                     val success = Api.submitSelfReport(
                         context,
                         fullName = getFullName(context),
@@ -45,9 +46,7 @@ object Storage {
                     )
                     if (success) chunk.forEach { selfReportDao.delete(it) }
                     else break
-
-                    idx += BATCH_SUBMIT_AMOUNT
-                }
+                } while (chunk.size == BATCH_SUBMIT_AMOUNT)
             }
         }
     }
