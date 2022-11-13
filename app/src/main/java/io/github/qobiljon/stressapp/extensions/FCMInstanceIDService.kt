@@ -22,14 +22,9 @@ class FCMInstanceIDService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        Storage.setFCMToken(applicationContext, fcmToken = token)
+        Storage.setFcmToken(applicationContext, fcmToken = token)
         if (Storage.isAuthenticated(applicationContext)) runBlocking {
-            Api.authenticate(
-                applicationContext,
-                fullName = Storage.getFullName(applicationContext),
-                dateOfBirth = Storage.getDateOfBirth(applicationContext),
-                fcmToken = token,
-            )
+            Api.setFcmToken(applicationContext, token = Storage.getAuthToken(applicationContext), fcmToken = token)
         }
     }
 

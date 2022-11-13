@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package io.github.qobiljon.stressapp.ui.main
 
 import android.content.Context

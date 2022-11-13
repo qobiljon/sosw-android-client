@@ -14,7 +14,7 @@ class AndroidApplication : Application() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) return@OnCompleteListener
             val token = task.result
-            Storage.setFCMToken(applicationContext, fcmToken = token)
+            Storage.setFcmToken(applicationContext, fcmToken = token)
         })
     }
 }

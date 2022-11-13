@@ -1,9 +1,13 @@
 package io.github.qobiljon.stressapp.core.api.requests
 
-import io.github.qobiljon.stressapp.core.data.SelfReport
-
 data class SubmitSelfReportRequest(
-    val full_name: String,
-    val date_of_birth: String,
-    val self_reports: List<SelfReport>,
+    val timestamp: Long,
+    val pss_control: Int,
+    val pss_confident: Int,
+    val pss_yourway: Int,
+    val pss_difficulties: Int,
+    val stresslvl: Int,
+    val social_settings: String,
+    val location: String,
+    val activity: String,
 )
