@@ -12,10 +12,8 @@ import kotlinx.coroutines.runBlocking
 
 object Storage {
     private const val KEY_PREFS_NAME = "shared_prefs"
-    private const val KEY_FULL_NAME = "full_name"
-    private const val KEY_DATE_OF_BIRTH = "date_of_birth"
+    private const val KEY_AUTH_TOKEN = "auth_token"
     private const val KEY_FCM_TOKEN = "fcm_token"
-    private const val BATCH_SUBMIT_AMOUNT = 100
 
     private lateinit var db: AppDatabase
 
@@ -31,55 +29,47 @@ object Storage {
         if (!isAuthenticated(context)) return
 
         runBlocking {
+            launch {
+                Api.setFcmToken(
+                    context,
+                    token = getAuthToken(context),
+                    fcmToken = getFcmToken(context),
+                )
+            }
+
             val selfReportDao = db.selfReportDao()
             launch {
-                var chunk: List<SelfReport>
-                do {
-                    chunk = selfReportDao.getK(k = BATCH_SUBMIT_AMOUNT)
-                    if (chunk.isEmpty()) break
-
-                    val success = Api.submitSelfReport(
-                        context,
-                        fullName = getFullName(context),
-                        dateOfBirth = getDateOfBirth(context),
-                        selfReports = chunk,
-                    )
-                    if (success) chunk.forEach { selfReportDao.delete(it) }
-                    else break
-                } while (chunk.size == BATCH_SUBMIT_AMOUNT)
+                for (selfReport in selfReportDao.getAll()) {
+                    val success = Api.submitSelfReport(context, token = getAuthToken(context), selfReport = selfReport)
+                    if (success) selfReportDao.delete(selfReport)
+                }
             }
         }
     }
 
     fun isAuthenticated(context: Context): Boolean {
-        return getSharedPreferences(context).getString(KEY_FULL_NAME, null) != null && getSharedPreferences(context).getString(KEY_DATE_OF_BIRTH, null) != null
+        return getSharedPreferences(context).getString(KEY_AUTH_TOKEN, null) != null
     }
 
-    fun getFullName(context: Context): String {
-        return getSharedPreferences(context).getString(KEY_FULL_NAME, null)!!
+    fun getAuthToken(context: Context): String {
+        return getSharedPreferences(context).getString(KEY_AUTH_TOKEN, null)!!
     }
 
-    fun getDateOfBirth(context: Context): String {
-        return getSharedPreferences(context).getString(KEY_DATE_OF_BIRTH, null)!!
+    fun setAuthToken(context: Context, authToken: String) {
+        getSharedPreferences(context).edit {
+            putString(KEY_AUTH_TOKEN, authToken)
+        }
     }
 
-    fun getFCMToken(context: Context): String {
+    fun hasFcmToken(context: Context): Boolean {
+        return getSharedPreferences(context).getString(KEY_FCM_TOKEN, null) != null
+    }
+
+    fun getFcmToken(context: Context): String {
         return getSharedPreferences(context).getString(KEY_FCM_TOKEN, null)!!
     }
 
-    fun setFullName(context: Context, fullName: String) {
-        getSharedPreferences(context).edit {
-            putString(KEY_FULL_NAME, fullName)
-        }
-    }
-
-    fun setDateOfBirth(context: Context, dateOfBirth: String) {
-        getSharedPreferences(context).edit {
-            putString(KEY_DATE_OF_BIRTH, dateOfBirth)
-        }
-    }
-
-    fun setFCMToken(context: Context, fcmToken: String) {
+    fun setFcmToken(context: Context, fcmToken: String) {
         getSharedPreferences(context).edit {
             putString(KEY_FCM_TOKEN, fcmToken)
         }

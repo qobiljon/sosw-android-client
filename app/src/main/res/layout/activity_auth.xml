@@ -15,35 +15,158 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:labelFor="@id/etEmail"
+            android:text="@string/email" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/example_email_com"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/tvFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:labelFor="@id/etFullName"
-            android:text="@string/full_name" />
+            android:text="@string/full_name"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/etFullName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/dummy_name" />
+            android:hint="@string/dummy_name"
+            android:inputType="textPersonName"
+            android:visibility="gone" />
 
         <TextView
+            android:id="@+id/tvGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:labelFor="@id/etFullName"
-            android:text="@string/date_of_birth" />
+            android:labelFor="@id/spGender"
+            android:text="@string/gender"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvDateOfBirth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/etDateOfBirth"
+            android:text="@string/date_of_birth"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/etDateOfBirth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/date_of_birth_format" />
+            android:hint="@string/date_of_birth_format"
+            android:inputType="date"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/etPassword"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/dummy_password_hint"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/tvRepeatPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/etRepeatPassword"
+            android:text="@string/repeat_password"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etRepeatPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/dummy_password_hint"
+            android:inputType="textPassword"
+            android:visibility="gone" />
 
         <Button
-            android:id="@+id/btnAuthenticate"
+            android:id="@+id/btnSignIn"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/ema_box_spacing"
-            android:text="@string/authenticate" />
+            android:text="@string/sign_in" />
+
+        <Button
+            android:id="@+id/btnSignUp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ema_box_spacing"
+            android:text="@string/sign_up"
+            android:visibility="gone" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/auth_box_margin" />
+
+        <LinearLayout
+            android:id="@+id/llSignUpPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_account_prompt" />
+
+            <TextView
+                android:id="@+id/tvSignUpPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/prompt_padding"
+                android:text="@string/sign_up_prompt"
+                android:textColor="@color/purple_700"
+                android:textFontWeight="700" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSignInPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yes_account_prompt" />
+
+            <TextView
+                android:id="@+id/tvSignInPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/prompt_padding"
+                android:text="@string/sign_in_prompt"
+                android:textColor="@color/purple_700"
+                android:textFontWeight="700" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

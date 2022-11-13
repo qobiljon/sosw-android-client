@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
         viewPager.adapter = sectionsPagerAdapter
 
-        if (!Storage.isAuthenticated(applicationContext)) startActivityForResult(Intent(applicationContext, AuthActivity::class.java), REQUEST_CODE_AUTH)
+        @Suppress("DEPRECATION") if (!Storage.isAuthenticated(applicationContext)) startActivityForResult(Intent(applicationContext, AuthActivity::class.java), REQUEST_CODE_AUTH)
         else runServices()
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        @Suppress("DEPRECATION") super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_CODE_AUTH) {
             if (resultCode == 0) runServices()

@@ -11,6 +11,7 @@ import io.github.qobiljon.stressapp.utils.Api
 import io.github.qobiljon.stressapp.utils.Storage
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 
 class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
@@ -33,7 +34,7 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
         btnSubmit = view.findViewById(R.id.btnSubmit)
 
         rgQuestions.forEach { rg ->
-            rg.setOnCheckedChangeListener { _, i ->
+            rg.setOnCheckedChangeListener { _, _ ->
                 var readyToSubmit = true
                 for (_rg in rgQuestions) {
                     readyToSubmit = _rg.checkedRadioButtonId != -1
@@ -99,9 +100,8 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
                     )
                     val success = Api.submitSelfReport(
                         context = context,
-                        fullName = Storage.getFullName(context),
-                        dateOfBirth = Storage.getDateOfBirth(context),
-                        selfReports = listOf(selfReport),
+                        token = Storage.getAuthToken(context),
+                        selfReport = selfReport,
                     )
                     if (!success) Storage.saveSelfReport(selfReport)
                     cleanUp()
@@ -117,7 +117,7 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
 
     @Deprecated("Deprecated in Java")
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
+        @Suppress("DEPRECATION") super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) cleanUp()
     }
 

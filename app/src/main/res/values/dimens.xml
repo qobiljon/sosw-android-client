@@ -17,4 +17,6 @@
     <dimen name="ema_box_marginhorizontal">12dp</dimen>
     <dimen name="ema_box_spacing">24dp</dimen>
     <dimen name="ema_options_margintop">12dp</dimen>
+
+    <dimen name="prompt_padding">16dp</dimen>
 </resources>
