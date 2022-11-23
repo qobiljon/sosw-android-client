@@ -7,10 +7,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/q8_context_activity"
+        android:text="8. 설문지를 작성하기 직전에 무엇을 하고 있었나요?"
         android:textColor="@color/black"
         android:textSize="@dimen/ema_question_textsize" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please report your current activity."
+        android:textColor="@color/black"
+        android:textSize="@dimen/ema_question_eng_textsize" />
 
     <View
         android:layout_width="match_parent"

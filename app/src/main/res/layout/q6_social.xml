@@ -7,10 +7,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/q6_context_socialsettings"
+        android:text="6. 귀하의 현재 사회적 환경(사회적 상호작용의 유무)을 보고하십시오."
         android:textColor="@color/black"
         android:textSize="@dimen/ema_question_textsize" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please report your current social settings (presence or absence of any social interactions)."
+        android:textColor="@color/black"
+        android:textSize="@dimen/ema_question_eng_textsize" />
 
     <View
         android:layout_width="match_parent"

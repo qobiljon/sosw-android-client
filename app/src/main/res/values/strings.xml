@@ -1,23 +1,22 @@
 <resources>
-    <string name="app_name">Stress data collection app</string>
+    <string name="app_name">스트레스 자가 진단</string>
 
     <!-- API urls -->
-    <string name="api_base_url" translatable="false">http://20.0.0.65:80/api/</string>
-    <!--string name="api_base_url" translatable="false">http://easytrack.ddns.net:40080/api/</string-->
+    <!--    <string name="api_base_url" translatable="false">http://20.0.0.65:80/api/</string>-->
 
+    <string name="api_base_url" translatable="false">http://easytrack.ddns.net:40080/api/</string>
 
     <!-- Room -->
     <string name="room_db_name" translatable="false">app-database</string>
 
     <!-- Auth page details -->
-    <string name="full_name">Full name</string>
-    <string name="date_of_birth">Date of birth</string>
+    <string name="full_name">이름</string>
+    <string name="date_of_birth">생년월일</string>
     <string name="dummy_name" translatable="false">홍길동</string>
     <string name="date_of_birth_format" translatable="false">YYYYMMDD</string>
 
-    <string name="tab_dashboard">Dashboard</string>
-    <string name="tab_selfreport">Self-report</string>
-    <string name="new_self_report">Submit self-report</string>
+    <string name="tab_dashboard">대시보드</string>
+    <string name="tab_selfreport">설문 문항</string>
 
     <string name="frequency0">Never</string>
     <string name="frequency1">Almost never</string>
@@ -32,8 +31,8 @@
     <string name="stresslvl3">Moderately stressed</string>
     <string name="stresslvl4">Extremely stressed</string>
 
-    <string name="socialsettings_asocial">👤 Asocial (watching TV, riding a bus)</string>
-    <string name="socialsettings_social">👥 Social (conversing, in a class)</string>
+    <string name="socialsettings_asocial">👤 Asocial (no social interaction with anyone)</string>
+    <string name="socialsettings_social">👥 Social (engaging in an activity with someone)</string>
 
     <string name="location_home">🏠 Home (home, dorm)</string>
     <string name="location_work">🏢 Work (lab, office)</string>
@@ -63,32 +62,30 @@
     <string name="q6_context_socialsettings">6. Please report your current social settings.</string>
     <string name="q7_context_location">7. Please report your current location.</string>
     <string name="q8_context_activity">8. Please report your current activity.</string>
-    <string name="submit">Submit</string>
+    <string name="submit">제출</string>
 
-    <string name="sign_in">Sign In</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="sign_in_success">Signed in successfully</string>
-    <string name="sign_up_success">Signed up successfully. Now you can sign in!</string>
-    <string name="sign_in_failure">Failed to sign in, please check your inputs and try again!</string>
-    <string name="sign_up_failure">Failed to sign up, please check your inputs and try again!</string>
+    <string name="sign_in">로그인</string>
+    <string name="sign_up">가입하기</string>
+    <string name="sign_in_success">로그인 성공</string>
+    <string name="sign_up_success">회원가입 성공! 로그인 바랍니다.</string>
+    <string name="sign_in_failure">로그인 실패, 다시 시도해주시길 바랍니다.</string>
+    <string name="sign_up_failure">회원가입 실패, 다시 시도해주시길 바랍니다.</string>
 
     <string name="push_title">Stress report time!</string>
-    <string name="push_prompt">Please log your current situation and stress levels.</string>
-    <string name="email">Email</string>
+    <string name="push_prompt">현재 상황과 스트레스 상태에 대해서 설문해주시길 바랍니다.</string>
+    <string name="email">이메일</string>
     <string name="example_email_com" translatable="false">example@email.com</string>
-    <string name="gender">Gender</string>
-    <string name="fix_date_toast">Please check the date format! (YYYMMDD)</string>
-    <string name="password">Password</string>
+    <string name="gender">성별</string>
+    <string name="fix_date_toast">날짜 형식을 확인해주세요! (YYYMMDD)</string>
+    <string name="password">비밀번호</string>
     <string name="dummy_password_hint" translatable="false">***</string>
-    <string name="repeat_password">Repeat the password</string>
-    <string name="passwords_dont_match">Passwords don\'t match, please try again!</string>
-    <string name="sign_up_prompt">Sign up!</string>
-    <string name="sign_in_prompt">Sign in!</string>
-    <string name="no_account_prompt">Don\'t have account yet?</string>
-    <string name="yes_account_prompt">Already have an account?</string>
+    <string name="repeat_password">비밀번호 재확인</string>
+    <string name="passwords_dont_match">비밀번호가 일치하지 않습니다.</string>
+    <string name="no_account_prompt">계정이 없으신가요?</string>
+    <string name="yes_account_prompt">계정이 이미 있으시면</string>
 
     <string-array name="gender_options" translatable="false">
-        <item>M</item>
-        <item>F</item>
+        <item>남자</item>
+        <item>여자</item>
     </string-array>
 </resources>

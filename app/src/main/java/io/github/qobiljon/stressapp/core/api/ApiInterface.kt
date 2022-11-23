@@ -2,7 +2,6 @@ package io.github.qobiljon.stressapp.core.api
 
 import io.github.qobiljon.stressapp.core.api.requests.*
 import io.github.qobiljon.stressapp.core.api.responses.*
-import io.github.qobiljon.stressapp.core.data.SelfReport
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
