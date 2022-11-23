@@ -71,7 +71,7 @@ class AuthActivity : AppCompatActivity() {
                     applicationContext,
                     email = etEmail.text.toString(),
                     fullName = etFullName.text.toString(),
-                    gender = spGender.selectedItem as String,
+                    gender = if ((spGender.selectedItem as String).equals("남자")) "M" else "F",
                     dateOfBirth = etDateOfBirth.text.toString(),
                     fcmToken = Storage.getFcmToken(applicationContext),
                     password = etPassword.text.toString(),

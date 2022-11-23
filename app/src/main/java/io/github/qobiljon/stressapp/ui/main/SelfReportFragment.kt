@@ -97,6 +97,7 @@ class SelfReportFragment : Fragment(R.layout.fragment_self_report) {
                         social_settings = socialSettings,
                         location = location,
                         activity = activity,
+                        is_submitted = false,
                     )
                     val success = Api.submitSelfReport(
                         context = context,

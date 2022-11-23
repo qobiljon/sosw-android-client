@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "668ed4182b3eb395231db1ba3afeabf0",
+    "identityHash": "b92485de5c7a19004e1f780a9843849e",
     "entities": [
       {
         "tableName": "SelfReport",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timestamp` TEXT NOT NULL, `pss_control` INTEGER NOT NULL, `pss_confident` INTEGER NOT NULL, `pss_yourway` INTEGER NOT NULL, `pss_difficulties` INTEGER NOT NULL, `stresslvl` INTEGER NOT NULL, `social_settings` TEXT NOT NULL, `location` TEXT NOT NULL, `activity` TEXT NOT NULL, PRIMARY KEY(`timestamp`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timestamp` INTEGER NOT NULL, `pss_control` INTEGER NOT NULL, `pss_confident` INTEGER NOT NULL, `pss_yourway` INTEGER NOT NULL, `pss_difficulties` INTEGER NOT NULL, `stresslvl` INTEGER NOT NULL, `social_settings` TEXT NOT NULL, `location` TEXT NOT NULL, `activity` TEXT NOT NULL, `is_submitted` INTEGER NOT NULL, PRIMARY KEY(`timestamp`))",
         "fields": [
           {
             "fieldPath": "timestamp",
             "columnName": "timestamp",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -61,6 +61,12 @@
             "columnName": "activity",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "is_submitted",
+            "columnName": "is_submitted",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -76,7 +82,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '668ed4182b3eb395231db1ba3afeabf0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b92485de5c7a19004e1f780a9843849e')"
     ]
   }
 }

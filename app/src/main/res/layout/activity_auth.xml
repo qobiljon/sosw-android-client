@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/prompt_padding"
-                android:text="@string/sign_up_prompt"
+                android:text="@string/sign_up"
                 android:textColor="@color/purple_700"
                 android:textFontWeight="700" />
 
@@ -162,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/prompt_padding"
-                android:text="@string/sign_in_prompt"
+                android:text="@string/sign_in"
                 android:textColor="@color/purple_700"
                 android:textFontWeight="700" />
 

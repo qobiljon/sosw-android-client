@@ -14,8 +14,7 @@ object Storage {
     private const val KEY_PREFS_NAME = "shared_prefs"
     private const val KEY_AUTH_TOKEN = "auth_token"
     private const val KEY_FCM_TOKEN = "fcm_token"
-
-    private lateinit var db: AppDatabase
+    lateinit var db: AppDatabase
 
     private fun getSharedPreferences(context: Context): SharedPreferences {
         return context.getSharedPreferences(KEY_PREFS_NAME, Context.MODE_PRIVATE)
@@ -29,19 +28,12 @@ object Storage {
         if (!isAuthenticated(context)) return
 
         runBlocking {
+            launch { Api.setFcmToken(context, token = getAuthToken(context), fcmToken = getFcmToken(context)) }
             launch {
-                Api.setFcmToken(
-                    context,
-                    token = getAuthToken(context),
-                    fcmToken = getFcmToken(context),
-                )
-            }
-
-            val selfReportDao = db.selfReportDao()
-            launch {
-                for (selfReport in selfReportDao.getAll()) {
+                val selfReportDao = db.selfReportDao()
+                for (selfReport in selfReportDao.getFiltered(isSubmitted = false)) {
                     val success = Api.submitSelfReport(context, token = getAuthToken(context), selfReport = selfReport)
-                    if (success) selfReportDao.delete(selfReport)
+                    if (success) selfReportDao.setIsSubmitted(timestamp = selfReport.timestamp, isSubmitted = true)
                 }
             }
         }
@@ -56,9 +48,7 @@ object Storage {
     }
 
     fun setAuthToken(context: Context, authToken: String) {
-        getSharedPreferences(context).edit {
-            putString(KEY_AUTH_TOKEN, authToken)
-        }
+        getSharedPreferences(context).edit { putString(KEY_AUTH_TOKEN, authToken) }
     }
 
     fun hasFcmToken(context: Context): Boolean {
@@ -70,9 +60,7 @@ object Storage {
     }
 
     fun setFcmToken(context: Context, fcmToken: String) {
-        getSharedPreferences(context).edit {
-            putString(KEY_FCM_TOKEN, fcmToken)
-        }
+        getSharedPreferences(context).edit { putString(KEY_FCM_TOKEN, fcmToken) }
     }
 
     fun saveSelfReport(selfReport: SelfReport) {

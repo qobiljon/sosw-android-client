@@ -15,4 +15,5 @@ data class SelfReport(
     @ColumnInfo(name = "social_settings") val social_settings: String,
     @ColumnInfo(name = "location") val location: String,
     @ColumnInfo(name = "activity") val activity: String,
+    @ColumnInfo(name = "is_submitted") val is_submitted: Boolean,
 )
