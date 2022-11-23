@@ -7,10 +7,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/q3_pss_yourway"
+        android:text="3. 자신의 뜻대로 일이 진행된다고 느낀 적이 얼마나 있었나요?"
         android:textColor="@color/black"
         android:textSize="@dimen/ema_question_textsize" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="How often did you feel that things were going your way?"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ema_question_eng_textsize" />
 
     <View
         android:layout_width="match_parent"

@@ -14,6 +14,8 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/ema_box_spacing">
 
+        <!--        PSS-4 Korean version taken from https://www.cmu.edu/dietrich/psychology/stress-immunity-disease-lab/scales/pdf/pss_10_korean.pdf-->
+
         <include
             layout="@layout/q1_control"
             android:layout_width="match_parent"
