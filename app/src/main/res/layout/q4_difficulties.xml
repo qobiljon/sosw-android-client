@@ -7,14 +7,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="4. 어려운 일이 너무 많이 쌓여서 극복할 수 없다고 느낀적이 얼마나 있었나요?"
+        android:text="4. 어려운 일이 너무 많이 쌓여서 극복할 수 없다고 느낀적이 있었나요?"
         android:textColor="@color/black"
         android:textSize="@dimen/ema_question_textsize" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="How often did you feel that difficulties were piling up so high that you could not overcome them?"
+        android:text="Did you feel difficulties piling up so you cannot overcome them?"
         android:textColor="@color/black"
         android:textSize="@dimen/ema_question_eng_textsize" />
 

@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please rate your current perceived stress level."
+        android:text="Please rate your current (perceived) stress level."
         android:textColor="@color/black"
         android:textSize="@dimen/ema_question_eng_textsize" />
 

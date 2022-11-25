@@ -18,11 +18,11 @@
     <string name="tab_dashboard">대시보드</string>
     <string name="tab_selfreport">설문 문항</string>
 
-    <string name="frequency0">Never</string>
-    <string name="frequency1">Almost never</string>
-    <string name="frequency2">Sometimes</string>
-    <string name="frequency3">Fairly often</string>
-    <string name="frequency4">Very often</string>
+    <string name="frequency0">전혀 그렇지 않다 / strongly disagree</string>
+    <string name="frequency1">그렇지 않다 / disagree </string>
+    <string name="frequency2">보통이다 / neither agree nor disagree</string>
+    <string name="frequency3">그렇다 / agree</string>
+    <string name="frequency4">매우 그렇다 / strongly agree</string>
     <string name="na">N/A</string>
 
     <string name="stresslvl0">Not stressed</string>
