@@ -15,8 +15,7 @@
     <string name="dummy_name" translatable="false">홍길동</string>
     <string name="date_of_birth_format" translatable="false">YYYYMMDD</string>
 
-    <string name="tab_dashboard">대시보드</string>
-    <string name="tab_selfreport">설문 문항</string>
+    <string name="permissions_toast">필요한 권한을 부여하십시오!</string>
 
     <string name="frequency0">전혀 그렇지 않다 / strongly disagree</string>
     <string name="frequency1">그렇지 않다 / disagree </string>

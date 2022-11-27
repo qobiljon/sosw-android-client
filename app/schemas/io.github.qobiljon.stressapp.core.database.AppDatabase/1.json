@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "770d5120aa8cb9f9bbddf614a151556f",
+    "version": 1,
+    "identityHash": "7d03938eea7c170d6148a068ff99116b",
     "entities": [
       {
         "tableName": "SelfReport",
@@ -71,12 +71,62 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "CalendarEvent",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`event_id` TEXT NOT NULL, `title` TEXT NOT NULL, `start_ts` INTEGER NOT NULL, `end_ts` INTEGER NOT NULL, `event_location` TEXT, `is_submitted` INTEGER NOT NULL, PRIMARY KEY(`event_id`))",
+        "fields": [
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "start_ts",
+            "columnName": "start_ts",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "end_ts",
+            "columnName": "end_ts",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event_location",
+            "columnName": "event_location",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "is_submitted",
+            "columnName": "is_submitted",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "event_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '770d5120aa8cb9f9bbddf614a151556f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d03938eea7c170d6148a068ff99116b')"
     ]
   }
 }

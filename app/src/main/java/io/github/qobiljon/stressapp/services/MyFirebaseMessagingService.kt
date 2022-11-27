@@ -1,4 +1,4 @@
-package io.github.qobiljon.stressapp.extensions
+package io.github.qobiljon.stressapp.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,21 +10,21 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import io.github.qobiljon.stressapp.R
+import io.github.qobiljon.stressapp.core.api.ApiHelper
+import io.github.qobiljon.stressapp.core.database.DatabaseHelper
 import io.github.qobiljon.stressapp.ui.MainActivity
-import io.github.qobiljon.stressapp.utils.Api
-import io.github.qobiljon.stressapp.utils.Storage
 import kotlinx.coroutines.runBlocking
 
-class FCMInstanceIDService : FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "sosw.app.push"
         private const val NOTIFICATION_CHANNEL_NAME = "sosw_app_push"
     }
 
     override fun onNewToken(token: String) {
-        Storage.setFcmToken(applicationContext, fcmToken = token)
-        if (Storage.isAuthenticated(applicationContext)) runBlocking {
-            Api.setFcmToken(applicationContext, token = Storage.getAuthToken(applicationContext), fcmToken = token)
+        DatabaseHelper.setFcmToken(applicationContext, fcmToken = token)
+        if (DatabaseHelper.isAuthenticated(applicationContext)) runBlocking {
+            ApiHelper.setFcmToken(applicationContext, token = DatabaseHelper.getAuthToken(applicationContext), fcmToken = token)
         }
     }
 

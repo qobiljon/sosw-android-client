@@ -1,4 +1,4 @@
-package io.github.qobiljon.stressapp.core.data
+package io.github.qobiljon.stressapp.core.database.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -15,5 +15,4 @@ data class SelfReport(
     @ColumnInfo(name = "social_settings") val social_settings: String,
     @ColumnInfo(name = "location") val location: String,
     @ColumnInfo(name = "activity") val activity: String,
-    @ColumnInfo(name = "is_submitted") val is_submitted: Boolean,
 )

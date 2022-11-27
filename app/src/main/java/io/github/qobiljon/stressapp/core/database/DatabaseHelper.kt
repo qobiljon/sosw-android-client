@@ -1,16 +1,16 @@
-package io.github.qobiljon.stressapp.utils
+package io.github.qobiljon.stressapp.core.database
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.room.Room
 import io.github.qobiljon.stressapp.R
-import io.github.qobiljon.stressapp.core.data.AppDatabase
-import io.github.qobiljon.stressapp.core.data.SelfReport
+import io.github.qobiljon.stressapp.core.api.ApiHelper
+import io.github.qobiljon.stressapp.core.database.data.SelfReport
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-object Storage {
+object DatabaseHelper {
     private const val KEY_PREFS_NAME = "shared_prefs"
     private const val KEY_AUTH_TOKEN = "auth_token"
     private const val KEY_FCM_TOKEN = "fcm_token"
@@ -28,12 +28,12 @@ object Storage {
         if (!isAuthenticated(context)) return
 
         runBlocking {
-            launch { Api.setFcmToken(context, token = getAuthToken(context), fcmToken = getFcmToken(context)) }
+            launch { ApiHelper.setFcmToken(context, token = getAuthToken(context), fcmToken = getFcmToken(context)) }
             launch {
                 val selfReportDao = db.selfReportDao()
-                for (selfReport in selfReportDao.getFiltered(isSubmitted = false)) {
-                    val success = Api.submitSelfReport(context, token = getAuthToken(context), selfReport = selfReport)
-                    if (success) selfReportDao.setIsSubmitted(timestamp = selfReport.timestamp, isSubmitted = true)
+                for (selfReport in selfReportDao.getAll()) {
+                    val success = ApiHelper.submitSelfReport(context, token = getAuthToken(context), selfReport = selfReport)
+                    if (success) selfReportDao.delete(selfReport)
                 }
             }
         }

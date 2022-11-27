@@ -8,8 +8,8 @@ import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import io.github.qobiljon.stressapp.R
+import io.github.qobiljon.stressapp.core.database.DatabaseHelper
 import io.github.qobiljon.stressapp.ui.MainActivity
-import io.github.qobiljon.stressapp.utils.Storage
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -20,7 +20,7 @@ class DataSubmissionService : Service() {
         private const val DATA_SUBMISSION_INTERVAL = 60L
     }
 
-    private var isRunning = false
+    var isRunning = false
     private val mBinder: IBinder = LocalBinder()
     private val executor = Executors.newScheduledThreadPool(10)
 
@@ -48,7 +48,7 @@ class DataSubmissionService : Service() {
         notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(notificationChannel)
-        val notification = Notification.Builder(this, notificationChannelId).setContentTitle(getString(R.string.app_name)).setContentText("Uploading data to server").setSmallIcon(R.mipmap.ic_stress_app).setContentIntent(pendingIntent).build()
+        val notification = Notification.Builder(this, notificationChannelId).setContentTitle(getString(R.string.app_name)).setContentText("Synchronization service running").setSmallIcon(R.mipmap.ic_stress_app).setContentIntent(pendingIntent).build()
         startForeground(notificationId, notification)
 
         super.onCreate()
@@ -58,7 +58,7 @@ class DataSubmissionService : Service() {
         Log.e(MainActivity.TAG, "DataSubmissionService.onStartCommand()")
         if (isRunning) return START_STICKY
         else {
-            executor.scheduleAtFixedRate({ Storage.syncToCloud(applicationContext) }, 0L, DATA_SUBMISSION_INTERVAL, TimeUnit.SECONDS)
+            executor.scheduleAtFixedRate({ DatabaseHelper.syncToCloud(applicationContext) }, 0L, DATA_SUBMISSION_INTERVAL, TimeUnit.SECONDS)
             isRunning = true
         }
         return START_STICKY

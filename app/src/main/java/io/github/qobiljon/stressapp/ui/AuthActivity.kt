@@ -6,8 +6,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import io.github.qobiljon.stressapp.R
-import io.github.qobiljon.stressapp.utils.Api
-import io.github.qobiljon.stressapp.utils.Storage
+import io.github.qobiljon.stressapp.core.api.ApiHelper
+import io.github.qobiljon.stressapp.core.database.DatabaseHelper
 import io.github.qobiljon.stressapp.utils.Utils
 import kotlinx.coroutines.launch
 
@@ -67,13 +67,13 @@ class AuthActivity : AppCompatActivity() {
 
             btnSignUp.isEnabled = false
             lifecycleScope.launch {
-                val success = Api.signUp(
+                val success = ApiHelper.signUp(
                     applicationContext,
                     email = etEmail.text.toString(),
                     fullName = etFullName.text.toString(),
                     gender = if ((spGender.selectedItem as String).equals("남자")) "M" else "F",
                     dateOfBirth = etDateOfBirth.text.toString(),
-                    fcmToken = Storage.getFcmToken(applicationContext),
+                    fcmToken = DatabaseHelper.getFcmToken(applicationContext),
                     password = etPassword.text.toString(),
                 )
                 if (success) {
@@ -91,7 +91,7 @@ class AuthActivity : AppCompatActivity() {
         btnSignIn.setOnClickListener {
             btnSignIn.isEnabled = false
             lifecycleScope.launch {
-                val success = Api.signIn(
+                val success = ApiHelper.signIn(
                     applicationContext,
                     email = etEmail.text.toString(),
                     password = etPassword.text.toString(),
@@ -99,19 +99,19 @@ class AuthActivity : AppCompatActivity() {
                 if (success) {
                     Utils.toast(applicationContext, getString(R.string.sign_in_success))
 
-                    if (Storage.hasFcmToken(applicationContext)) Api.setFcmToken(
+                    if (DatabaseHelper.hasFcmToken(applicationContext)) ApiHelper.setFcmToken(
                         applicationContext,
-                        token = Storage.getAuthToken(applicationContext),
-                        fcmToken = Storage.getFcmToken(applicationContext),
+                        token = DatabaseHelper.getAuthToken(applicationContext),
+                        fcmToken = DatabaseHelper.getFcmToken(applicationContext),
                     )
 
                     btnSignIn.isEnabled = true
-                    setResult(0)
+                    setResult(12)
                     finish()
                 } else {
                     Utils.toast(applicationContext, getString(R.string.sign_in_failure))
                     btnSignIn.isEnabled = true
-                    setResult(1)
+                    setResult(24)
                 }
             }
         }
