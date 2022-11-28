@@ -6,7 +6,7 @@ import androidx.core.content.edit
 import androidx.room.Room
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.api.ApiHelper
-import io.github.qobiljon.stressapp.core.database.data.SelfReport
+import io.github.qobiljon.stressapp.core.database.data.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -30,10 +30,45 @@ object DatabaseHelper {
         runBlocking {
             launch { ApiHelper.setFcmToken(context, token = getAuthToken(context), fcmToken = getFcmToken(context)) }
             launch {
-                val selfReportDao = db.selfReportDao()
-                for (selfReport in selfReportDao.getAll()) {
+                val dao = db.selfReportDao()
+                for (selfReport in dao.getAll()) {
                     val success = ApiHelper.submitSelfReport(context, token = getAuthToken(context), selfReport = selfReport)
-                    if (success) selfReportDao.delete(selfReport)
+                    if (success) dao.delete(selfReport)
+                }
+            }
+            launch {
+                val dao = db.locationDao()
+                for (location in dao.getAll()) {
+                    val success = ApiHelper.submitLocation(context, token = getAuthToken(context), location = location)
+                    if (success) dao.delete(location)
+                }
+            }
+            launch {
+                val dao = db.screenStateDao()
+                for (screenState in dao.getAll()) {
+                    val success = ApiHelper.submitScreenState(context, token = getAuthToken(context), screenState = screenState)
+                    if (success) dao.delete(screenState)
+                }
+            }
+            launch {
+                val dao = db.callLogDao()
+                for (callLog in dao.getAll()) {
+                    val success = ApiHelper.submitCallLog(context, token = getAuthToken(context), callLog = callLog)
+                    if (success) dao.delete(callLog)
+                }
+            }
+            launch {
+                val dao = db.calendarEventDao()
+                for (calendarEvent in dao.getFiltered(submitted = false)) {
+                    val success = ApiHelper.submitCalendarEvent(context, token = getAuthToken(context), calendarEvent = calendarEvent)
+                    if (success) dao.setSubmitted(submitted = true, eventId = calendarEvent.event_id)
+                }
+            }
+            launch {
+                val dao = db.activityTransitionDao()
+                for (activityTransition in dao.getAll()) {
+                    val success = ApiHelper.submitActivityTransition(context, token = getAuthToken(context), activityTransition = activityTransition)
+                    if (success) dao.delete(activityTransition)
                 }
             }
         }
@@ -65,5 +100,21 @@ object DatabaseHelper {
 
     fun saveSelfReport(selfReport: SelfReport) {
         db.selfReportDao().insertAll(selfReport)
+    }
+
+    fun saveLocation(location: Location) {
+        if (!db.locationDao().exists(location.timestamp)) db.locationDao().insertAll(location)
+    }
+
+    fun saveScreenState(screenState: ScreenState) {
+        db.screenStateDao().insertAll(screenState)
+    }
+
+    fun saveActivityTransition(activityTransition: ActivityTransition) {
+        db.activityTransitionDao().insertAll(activityTransition)
+    }
+
+    fun saveCallLog(callLog: CallLog) {
+        if (!db.callLogDao().exists(callLog.timestamp)) db.callLogDao().insertAll(callLog)
     }
 }

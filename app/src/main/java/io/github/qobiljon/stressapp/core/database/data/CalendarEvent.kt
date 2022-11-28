@@ -11,5 +11,5 @@ data class CalendarEvent(
     @ColumnInfo(name = "start_ts") val start_ts: Long,
     @ColumnInfo(name = "end_ts") val end_ts: Long,
     @ColumnInfo(name = "event_location") val event_location: String?,
-    @ColumnInfo(name = "is_submitted") val is_submitted: Boolean,
+    @ColumnInfo(name = "submitted") val submitted: Boolean,
 )

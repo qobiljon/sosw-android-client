@@ -2,12 +2,9 @@ package io.github.qobiljon.stressapp.core.api
 
 import android.content.Context
 import io.github.qobiljon.stressapp.R
-import io.github.qobiljon.stressapp.core.api.requests.SetFcmTokenRequest
-import io.github.qobiljon.stressapp.core.api.requests.SignInRequest
-import io.github.qobiljon.stressapp.core.api.requests.SignUpRequest
-import io.github.qobiljon.stressapp.core.api.requests.SubmitSelfReportRequest
+import io.github.qobiljon.stressapp.core.api.requests.*
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
-import io.github.qobiljon.stressapp.core.database.data.SelfReport
+import io.github.qobiljon.stressapp.core.database.data.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.ConnectException
@@ -77,6 +74,95 @@ object ApiHelper {
                     social_settings = selfReport.social_settings,
                     location = selfReport.location,
                     activity = selfReport.activity,
+                )
+            )
+            result.errorBody() == null && result.isSuccessful
+        } catch (e: ConnectException) {
+            false
+        } catch (e: SocketTimeoutException) {
+            false
+        }
+    }
+
+    suspend fun submitLocation(context: Context, token: String, location: Location): Boolean {
+        return try {
+            val result = getApiInterface(context).submitLocation(
+                token = "Token $token", SubmitLocationRequest(
+                    timestamp = location.timestamp,
+                    latitude = location.latitude,
+                    longitude = location.longitude,
+                    accuracy = location.accuracy,
+                )
+            )
+            result.errorBody() == null && result.isSuccessful
+        } catch (e: ConnectException) {
+            false
+        } catch (e: SocketTimeoutException) {
+            false
+        }
+    }
+
+    suspend fun submitScreenState(context: Context, token: String, screenState: ScreenState): Boolean {
+        return try {
+            val result = getApiInterface(context).submitScreenState(
+                token = "Token $token", SubmitScreenStateRequest(
+                    timestamp = screenState.timestamp,
+                    screen_state = screenState.screen_state,
+                    keyguard_restricted_input_mode = screenState.keyguard_restricted_input_mode,
+                )
+            )
+            result.errorBody() == null && result.isSuccessful
+        } catch (e: ConnectException) {
+            false
+        } catch (e: SocketTimeoutException) {
+            false
+        }
+    }
+
+    suspend fun submitCallLog(context: Context, token: String, callLog: CallLog): Boolean {
+        return try {
+            val result = getApiInterface(context).submitCallLog(
+                token = "Token $token", SubmitCallLogRequest(
+                    timestamp = callLog.timestamp,
+                    number = callLog.number,
+                    duration = callLog.duration,
+                    call_type = callLog.call_type,
+                )
+            )
+            result.errorBody() == null && result.isSuccessful
+        } catch (e: ConnectException) {
+            false
+        } catch (e: SocketTimeoutException) {
+            false
+        }
+    }
+
+    suspend fun submitCalendarEvent(context: Context, token: String, calendarEvent: CalendarEvent): Boolean {
+        return try {
+            val result = getApiInterface(context).submitCalendarEvent(
+                token = "Token $token", SubmitCalendarEventRequest(
+                    event_id = calendarEvent.event_id,
+                    title = calendarEvent.title,
+                    start_ts = calendarEvent.start_ts,
+                    end_ts = calendarEvent.end_ts,
+                    event_location = calendarEvent.event_location ?: "",
+                )
+            )
+            result.errorBody() == null && result.isSuccessful
+        } catch (e: ConnectException) {
+            false
+        } catch (e: SocketTimeoutException) {
+            false
+        }
+    }
+
+    suspend fun submitActivityTransition(context: Context, token: String, activityTransition: ActivityTransition): Boolean {
+        return try {
+            val result = getApiInterface(context).submitActivityTransition(
+                token = "Token $token", SubmitActivityTransitionRequest(
+                    timestamp = activityTransition.timestamp,
+                    activity_type = activityTransition.activity_type,
+                    transition_type = activityTransition.transition_type,
                 )
             )
             result.errorBody() == null && result.isSuccessful
