@@ -47,10 +47,13 @@
             android:value="false" />
 
         <receiver
-            android:name=".receivers.ActivityTransitionReceiver"
-            android:exported="false" />
+            android:name=".receivers.DetectedActivityReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
         <receiver
             android:name=".receivers.ScreenStateReceiver"
+            android:enabled="true"
             android:exported="false" />
 
         <service

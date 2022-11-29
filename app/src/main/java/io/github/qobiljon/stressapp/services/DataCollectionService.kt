@@ -14,12 +14,13 @@ import android.provider.CalendarContract
 import android.provider.CallLog
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
 import io.github.qobiljon.stressapp.core.database.data.CalendarEvent
 import io.github.qobiljon.stressapp.core.database.data.Location
-import io.github.qobiljon.stressapp.receivers.ActivityTransitionReceiver
+import io.github.qobiljon.stressapp.receivers.DetectedActivityReceiver
 import io.github.qobiljon.stressapp.receivers.ScreenStateReceiver
 import io.github.qobiljon.stressapp.ui.MainActivity
 import java.time.Instant
@@ -141,35 +142,43 @@ class DataCollectionService : Service() {
     private fun setUpActivityTransition() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) return
 
-        val request = ActivityTransitionRequest(
-            listOf(
-                ActivityTransition.Builder().setActivityType(DetectedActivity.STILL).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.STILL).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.WALKING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.WALKING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.IN_VEHICLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.IN_VEHICLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.ON_FOOT).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.ON_FOOT).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.ON_BICYCLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.ON_BICYCLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.RUNNING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.RUNNING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.TILTING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.TILTING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.UNKNOWN).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-                ActivityTransition.Builder().setActivityType(DetectedActivity.UNKNOWN).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-            )
+        val activityTransitions = listOf(
+            ActivityTransition.Builder().setActivityType(DetectedActivity.IN_VEHICLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.IN_VEHICLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.ON_BICYCLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.ON_BICYCLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.ON_FOOT).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.ON_FOOT).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.STILL).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.STILL).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.WALKING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.WALKING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.RUNNING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+            ActivityTransition.Builder().setActivityType(DetectedActivity.RUNNING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
         )
-        val client = ActivityRecognition.getClient(applicationContext)
-        val intent = Intent(applicationContext, ActivityTransitionReceiver::class.java)
+        val request = ActivityTransitionRequest(activityTransitions)
+
+        val intent = Intent(DetectedActivityReceiver.RECEIVER_ACTION)
         val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        client.requestActivityTransitionUpdates(request, pendingIntent)
+
+        val receiver = DetectedActivityReceiver()
+        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(receiver, IntentFilter(DetectedActivityReceiver.RECEIVER_ACTION))
+
+        val task = ActivityRecognition.getClient(applicationContext).requestActivityTransitionUpdates(request, pendingIntent)
+
+        task.addOnSuccessListener {
+            Log.e(MainActivity.TAG, "SUCCESS")
+        }
+
+        task.addOnFailureListener { e: Exception ->
+            Log.e(MainActivity.TAG, "FAILURE")
+        }
     }
 
     private fun sampleContextData() {
         getNewCalendarEvents() // calendar data
         getNewCalls() // call logs
+        Log.e(MainActivity.TAG, "confirm")
     }
 
     private fun getNewCalendarEvents() {

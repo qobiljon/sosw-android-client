@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
+
 class MainActivity : AppCompatActivity() {
     companion object {
         private const val PERMISSION_REQUEST_CODE = 101
@@ -185,19 +186,6 @@ class MainActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
-
-        run {
-            val dao = DatabaseHelper.db.locationDao()
-            dao.getAll().forEach { l ->
-                Log.e(TAG, "old loc: ${l.timestamp}, ${l.latitude}, ${l.longitude}, ${l.accuracy}")
-            }
-        }
-        run {
-            val dao = DatabaseHelper.db.activityTransitionDao()
-            dao.getAll().forEach { a ->
-                Log.e(TAG, "old activity: ${a.timestamp}, ${a.activity_type}, ${a.transition_type}")
-            }
         }
     }
 
