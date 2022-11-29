@@ -22,6 +22,7 @@ import io.github.qobiljon.stressapp.core.database.data.Location
 import io.github.qobiljon.stressapp.receivers.ActivityTransitionReceiver
 import io.github.qobiljon.stressapp.receivers.ScreenStateReceiver
 import io.github.qobiljon.stressapp.ui.MainActivity
+import java.time.Instant
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -172,19 +173,28 @@ class DataCollectionService : Service() {
     }
 
     private fun getNewCalendarEvents() {
+        val cal = Calendar.getInstance()
+        cal[Calendar.YEAR] = 2022
+        cal[Calendar.MONTH] = 0
+        cal[Calendar.DAY_OF_MONTH] = 1
+        val tsRangeFrom = cal.timeInMillis
+        cal[Calendar.YEAR] = 2024
+        val tsRangeUntil = cal.timeInMillis
+
         contentResolver.query(
             CalendarContract.Events.CONTENT_URI,
             arrayOf(
                 CalendarContract.Events.ORIGINAL_ID,
                 CalendarContract.Events.TITLE,
                 CalendarContract.Events.DTSTART,
+                CalendarContract.Events.DURATION,
                 CalendarContract.Events.DTEND,
                 CalendarContract.Events.EVENT_LOCATION,
             ),
-            CalendarContract.Events.DELETED + " != 1",
+            "(${CalendarContract.Events.DELETED} != 1) AND (${CalendarContract.Events.DTSTART} > $tsRangeFrom) AND (${CalendarContract.Events.DTEND} < $tsRangeUntil)",
             null,
             null,
-        )?.let {
+        )?.use {
             val dao = DatabaseHelper.db.calendarEventDao()
 
             val originalIdIdx = it.getColumnIndex(CalendarContract.Events.ORIGINAL_ID)
@@ -194,49 +204,71 @@ class DataCollectionService : Service() {
             val eventLocationIdx = it.getColumnIndex(CalendarContract.Events.EVENT_LOCATION)
 
             if (it.moveToFirst()) do {
+                val title = it.getString(titleIdx)
                 val startTs = it.getLong(startDateIdx)
                 val eventId = "${it.getString(originalIdIdx)}_${startTs}"
-                if (!dao.exists(eventId = eventId)) dao.insertAll(
+                val endTs = it.getLong(endDateIdx)
+                val eventLocation = it.getString(eventLocationIdx)
+                if (title != null && startTs != null && endTs != null) if (!dao.exists(eventId = eventId)) dao.insertAll(
                     CalendarEvent(
                         event_id = eventId,
-                        title = it.getString(titleIdx),
-                        start_ts = it.getLong(startDateIdx),
-                        end_ts = it.getLong(endDateIdx),
-                        event_location = it.getString(eventLocationIdx),
+                        title = title,
+                        start_ts = startTs,
+                        end_ts = endTs,
+                        event_location = eventLocation,
                         submitted = false,
                     )
                 )
             } while (it.moveToNext())
-
-            it.close()
         }
     }
 
     private fun getNewCalls() {
-        baseContext.contentResolver.query(CallLog.Calls.CONTENT_URI, null, null, null, null)?.let {
+        val cal = Calendar.getInstance()
+        cal[Calendar.YEAR] = 2022
+        cal[Calendar.MONTH] = 0
+        cal[Calendar.DAY_OF_MONTH] = 1
+        val tsRangeFrom = Date.from(Instant.ofEpochMilli(cal.timeInMillis)).time
+        cal[Calendar.YEAR] = 2024
+        val tsRangeUntil = Date.from(Instant.ofEpochMilli(cal.timeInMillis)).time
+
+        baseContext.contentResolver.query(
+            CallLog.Calls.CONTENT_URI,
+            arrayOf(
+                CallLog.Calls.DATE,
+                CallLog.Calls.NUMBER,
+                CallLog.Calls.DURATION,
+                CallLog.Calls.TYPE,
+            ),
+            "(${CallLog.Calls.DATE} > $tsRangeFrom) AND (${CallLog.Calls.DATE} < $tsRangeUntil)",
+            null,
+            null,
+        )?.use {
             if (it.moveToFirst()) do {
                 val callDate = it.getString(it.getColumnIndexOrThrow(CallLog.Calls.DATE))
-                val timestamp = Date(java.lang.Long.valueOf(callDate)).time
                 val number = it.getString(it.getColumnIndexOrThrow(CallLog.Calls.NUMBER))
                 val duration = it.getString(it.getColumnIndexOrThrow(CallLog.Calls.DURATION))
-                val callType = when (it.getString(it.getColumnIndexOrThrow(CallLog.Calls.TYPE)).toInt()) {
-                    CallLog.Calls.OUTGOING_TYPE -> "OUTGOING"
-                    CallLog.Calls.INCOMING_TYPE -> "INCOMING"
-                    CallLog.Calls.MISSED_TYPE -> "MISSED"
-                    else -> "N/A"
-                }
-                DatabaseHelper.saveCallLog(
-                    io.github.qobiljon.stressapp.core.database.data.CallLog(
-                        timestamp = timestamp,
-                        number = number,
-                        duration = duration,
-                        call_type = callType,
-                        submitted = false,
-                    )
-                )
-            } while (it.moveToNext())
+                val callType = it.getString(it.getColumnIndexOrThrow(CallLog.Calls.TYPE))
+                if (callDate != null && number != null && duration != null && callType != null) {
+                    val timestamp = Date(java.lang.Long.valueOf(callDate)).time
+                    val _callType = when (callType.toInt()) {
+                        CallLog.Calls.OUTGOING_TYPE -> "OUTGOING"
+                        CallLog.Calls.INCOMING_TYPE -> "INCOMING"
+                        CallLog.Calls.MISSED_TYPE -> "MISSED"
+                        else -> "N/A"
+                    }
 
-            it.close()
+                    DatabaseHelper.saveCallLog(
+                        io.github.qobiljon.stressapp.core.database.data.CallLog(
+                            timestamp = timestamp,
+                            number = number,
+                            duration = duration,
+                            call_type = _callType,
+                            submitted = false,
+                        )
+                    )
+                }
+            } while (it.moveToNext())
         }
     }
 }
