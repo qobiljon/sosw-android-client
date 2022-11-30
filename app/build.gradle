@@ -85,5 +85,4 @@ dependencies {
 
     // location
     implementation "com.google.android.gms:play-services-location:21.0.1"
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
 }

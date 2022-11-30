@@ -8,12 +8,6 @@ import io.github.qobiljon.stressapp.core.database.data.CalendarEvent
 
 @Dao
 interface CalendarEventDao {
-    @Query("SELECT * FROM calendarevent;")
-    fun getAll(): List<CalendarEvent>
-
-    @Query("SELECT * FROM calendarevent ORDER BY event_id ASC LIMIT :k")
-    fun getK(k: Int): List<CalendarEvent>
-
     @Query("SELECT * FROM calendarevent WHERE submitted = :submitted")
     fun getFiltered(submitted: Boolean): List<CalendarEvent>
 

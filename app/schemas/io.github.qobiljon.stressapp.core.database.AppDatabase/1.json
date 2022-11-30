@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1b4b9e50312ab01952b4c2d6fbdb89d8",
+    "identityHash": "5d93d1c845e55d08788f1e10800c0379",
     "entities": [
       {
         "tableName": "SelfReport",
@@ -194,7 +194,7 @@
       },
       {
         "tableName": "ActivityTransition",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timestamp` INTEGER NOT NULL, `activityType` TEXT NOT NULL, `transitionType` TEXT NOT NULL, PRIMARY KEY(`timestamp`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timestamp` INTEGER NOT NULL, `activity` TEXT NOT NULL, `transition` TEXT NOT NULL, PRIMARY KEY(`timestamp`))",
         "fields": [
           {
             "fieldPath": "timestamp",
@@ -203,15 +203,47 @@
             "notNull": true
           },
           {
-            "fieldPath": "activity_type",
-            "columnName": "activityType",
+            "fieldPath": "activity",
+            "columnName": "activity",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "transition_type",
-            "columnName": "transitionType",
+            "fieldPath": "transition",
+            "columnName": "transition",
             "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "timestamp"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ActivityRecognition",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`timestamp` INTEGER NOT NULL, `activity` TEXT NOT NULL, `confidence` INTEGER NOT NULL, PRIMARY KEY(`timestamp`))",
+        "fields": [
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "activity",
+            "columnName": "activity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "confidence",
+            "columnName": "confidence",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -272,7 +304,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1b4b9e50312ab01952b4c2d6fbdb89d8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5d93d1c845e55d08788f1e10800c0379')"
     ]
   }
 }

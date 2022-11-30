@@ -11,9 +11,6 @@ interface ScreenStateDao {
     @Query("SELECT * FROM screenstate;")
     fun getAll(): List<ScreenState>
 
-    @Query("SELECT * FROM screenstate ORDER BY timestamp ASC LIMIT :k")
-    fun getK(k: Int): List<ScreenState>
-
     @Insert
     fun insertAll(vararg screenState: ScreenState)
 

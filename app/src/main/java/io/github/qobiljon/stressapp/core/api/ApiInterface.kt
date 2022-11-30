@@ -33,6 +33,9 @@ interface ApiInterface {
     @POST("submit_activity_transition")
     suspend fun submitActivityTransition(@Header("Authorization") token: String, @Body submitActivityTransitionRequest: SubmitActivityTransitionRequest): Response<Void>
 
+    @POST("submit_activity_recognition")
+    suspend fun submitActivityRecognition(@Header("Authorization") token: String, @Body submitActivityRecognitionRequest: SubmitActivityRecognitionRequest): Response<Void>
+
     @POST("submit_screen_state")
     suspend fun submitScreenState(@Header("Authorization") token: String, @Body submitScreenStateRequest: SubmitScreenStateRequest): Response<Void>
 }

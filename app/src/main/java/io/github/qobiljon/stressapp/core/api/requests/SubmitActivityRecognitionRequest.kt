@@ -1,7 +1,7 @@
 package io.github.qobiljon.stressapp.core.api.requests
 
-data class SubmitActivityTransitionRequest(
+data class SubmitActivityRecognitionRequest(
     val timestamp: Long,
     val activity: String,
-    val transition: String,
+    val confidence: Int,
 )

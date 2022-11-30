@@ -161,8 +161,25 @@ object ApiHelper {
             val result = getApiInterface(context).submitActivityTransition(
                 token = "Token $token", SubmitActivityTransitionRequest(
                     timestamp = activityTransition.timestamp,
-                    activity_type = activityTransition.activity_type,
-                    transition_type = activityTransition.transition_type,
+                    activity = activityTransition.activity,
+                    transition = activityTransition.transition,
+                )
+            )
+            result.errorBody() == null && result.isSuccessful
+        } catch (e: ConnectException) {
+            false
+        } catch (e: SocketTimeoutException) {
+            false
+        }
+    }
+
+    suspend fun submitActivityRecognition(context: Context, token: String, activityRecognition: ActivityRecognition): Boolean {
+        return try {
+            val result = getApiInterface(context).submitActivityRecognition(
+                token = "Token $token", SubmitActivityRecognitionRequest(
+                    timestamp = activityRecognition.timestamp,
+                    activity = activityRecognition.activity,
+                    confidence = activityRecognition.confidence,
                 )
             )
             result.errorBody() == null && result.isSuccessful

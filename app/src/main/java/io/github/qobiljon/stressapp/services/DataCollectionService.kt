@@ -1,26 +1,25 @@
 package io.github.qobiljon.stressapp.services
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
 import android.os.Looper
 import android.provider.CalendarContract
 import android.provider.CallLog
 import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
 import io.github.qobiljon.stressapp.core.database.data.CalendarEvent
 import io.github.qobiljon.stressapp.core.database.data.Location
-import io.github.qobiljon.stressapp.receivers.DetectedActivityReceiver
+import io.github.qobiljon.stressapp.receivers.ActivityRecognitionReceiver
+import io.github.qobiljon.stressapp.receivers.ActivityTransitionReceiver
 import io.github.qobiljon.stressapp.receivers.ScreenStateReceiver
 import io.github.qobiljon.stressapp.ui.MainActivity
 import java.time.Instant
@@ -31,29 +30,14 @@ import java.util.concurrent.TimeUnit
 
 class DataCollectionService : Service() {
     companion object {
-        private const val DATA_SAMPLING_INTERVAL = 60L
+        private const val CALLS_CALENDAR_SAMPLING_INTERVAL_MS = 60 * 60 * 1000L
+        private const val ACTIVITY_RECOGNITION_INTERVAL_MS = 10 * 1000L
+        private const val LOCATION_INTERVAL_MS = 60 * 1000L
     }
 
     var isRunning = false
     private val mBinder: IBinder = LocalBinder()
     private val executor = Executors.newScheduledThreadPool(10)
-    private var locationCallback: LocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            locationResult.locations.forEach { l ->
-                if (l != null) {
-                    Log.e(MainActivity.TAG, "${l.time}, ${l.latitude}, ${l.longitude}, ${l.accuracy}")
-                    DatabaseHelper.saveLocation(
-                        Location(
-                            timestamp = l.time,
-                            latitude = l.latitude,
-                            longitude = l.longitude,
-                            accuracy = l.accuracy,
-                        )
-                    )
-                }
-            }
-        }
-    }
 
     inner class LocalBinder : Binder() {
         @Suppress("unused")
@@ -82,10 +66,6 @@ class DataCollectionService : Service() {
         val notification = Notification.Builder(this, notificationChannelId).setContentTitle(getString(R.string.app_name)).setContentText("Context sensing service running").setSmallIcon(R.mipmap.ic_stress_app).setContentIntent(pendingIntent).build()
         startForeground(notificationId, notification)
 
-        setUpLocationListener() // location listener
-        setUpScreenStateReceiver() // screen state listener
-        setUpActivityTransition() // activity recognition
-
         super.onCreate()
     }
 
@@ -93,8 +73,17 @@ class DataCollectionService : Service() {
         Log.e(MainActivity.TAG, "DataCollectionService.onStartCommand()")
         if (isRunning) return START_STICKY
         else {
-            executor.scheduleAtFixedRate({ sampleContextData() }, 0L, DataCollectionService.DATA_SAMPLING_INTERVAL, TimeUnit.SECONDS)
             isRunning = true
+
+            executor.scheduleAtFixedRate({
+                getNewCalendarEvents() // calendar data
+                getNewCalls() // call logs
+            }, 0L, CALLS_CALENDAR_SAMPLING_INTERVAL_MS, TimeUnit.MILLISECONDS)
+
+            setUpLocationListener() // location listener
+            setUpScreenStateReceiver() // screen state listener
+            setUpActivityTransition() // activity transition updates
+            setUpActivityRecognition() // activity recognition
         }
         return START_STICKY
     }
@@ -107,11 +96,12 @@ class DataCollectionService : Service() {
         super.onDestroy()
     }
 
+    @Suppress("DEPRECATION")
+    @SuppressLint("MissingPermission")
     private fun setUpLocationListener() {
+        // last known location
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
-        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-        val missingPermissions = permissions.filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
-        if (missingPermissions.isEmpty()) fusedLocationClient.lastLocation.addOnSuccessListener { l ->
+        fusedLocationClient.lastLocation.addOnSuccessListener { l ->
             if (l != null) DatabaseHelper.saveLocation(
                 Location(
                     timestamp = l.time,
@@ -121,14 +111,31 @@ class DataCollectionService : Service() {
                 )
             )
         }
+
+        // location updates
         val locationRequest: LocationRequest = LocationRequest.create().apply {
-            interval = 60000
+            interval = LOCATION_INTERVAL_MS
             fastestInterval = 10
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            maxWaitTime = 60000
+            maxWaitTime = LOCATION_INTERVAL_MS
         }
         val locationProviderClient = LocationServices.getFusedLocationProviderClient(applicationContext)
-        locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        locationProviderClient.requestLocationUpdates(locationRequest, object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                locationResult.locations.forEach { l ->
+                    if (l != null) {
+                        DatabaseHelper.saveLocation(
+                            Location(
+                                timestamp = l.time,
+                                latitude = l.latitude,
+                                longitude = l.longitude,
+                                accuracy = l.accuracy,
+                            )
+                        )
+                    }
+                }
+            }
+        }, Looper.getMainLooper())
     }
 
     private fun setUpScreenStateReceiver() {
@@ -139,48 +146,45 @@ class DataCollectionService : Service() {
         applicationContext.registerReceiver(ScreenStateReceiver(), filter)
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag", "MissingPermission")
     private fun setUpActivityTransition() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) return
-
-        val activityTransitions = listOf(
-            ActivityTransition.Builder().setActivityType(DetectedActivity.IN_VEHICLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.IN_VEHICLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.ON_BICYCLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.ON_BICYCLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.ON_FOOT).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.ON_FOOT).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.STILL).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.STILL).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.WALKING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.WALKING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.RUNNING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
-            ActivityTransition.Builder().setActivityType(DetectedActivity.RUNNING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
-        )
-        val request = ActivityTransitionRequest(activityTransitions)
-
-        val intent = Intent(DetectedActivityReceiver.RECEIVER_ACTION)
-        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
-        val receiver = DetectedActivityReceiver()
-        LocalBroadcastManager.getInstance(applicationContext).registerReceiver(receiver, IntentFilter(DetectedActivityReceiver.RECEIVER_ACTION))
-
-        val task = ActivityRecognition.getClient(applicationContext).requestActivityTransitionUpdates(request, pendingIntent)
-
-        task.addOnSuccessListener {
-            Log.e(MainActivity.TAG, "SUCCESS")
-        }
-
-        task.addOnFailureListener { e: Exception ->
-            Log.e(MainActivity.TAG, "FAILURE")
+        run {
+            val request = ActivityTransitionRequest(
+                listOf(
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.IN_VEHICLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.IN_VEHICLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.ON_BICYCLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.ON_BICYCLE).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.ON_FOOT).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.ON_FOOT).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.STILL).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.STILL).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.WALKING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.WALKING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.RUNNING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER).build(),
+                    ActivityTransition.Builder().setActivityType(DetectedActivity.RUNNING).setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT).build(),
+                )
+            )
+            val intent = Intent(applicationContext, ActivityTransitionReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(applicationContext, 7, intent, PendingIntent.FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) 0 else PendingIntent.FLAG_MUTABLE)
+            val client = ActivityRecognition.getClient(applicationContext)
+            val task = client.requestActivityTransitionUpdates(request, pendingIntent)
+            task.addOnSuccessListener { Log.e(MainActivity.TAG, "Activity transition listener configured successfully") }
+            task.addOnFailureListener { Log.e(MainActivity.TAG, "Failed to configure activity transition listener") }
         }
     }
 
-    private fun sampleContextData() {
-        getNewCalendarEvents() // calendar data
-        getNewCalls() // call logs
-        Log.e(MainActivity.TAG, "confirm")
+    @SuppressLint("UnspecifiedImmutableFlag", "MissingPermission")
+    private fun setUpActivityRecognition() {
+        val intent = Intent(applicationContext, ActivityRecognitionReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 8, intent, PendingIntent.FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) 0 else PendingIntent.FLAG_MUTABLE)
+        val client = ActivityRecognition.getClient(applicationContext)
+        val task = client.requestActivityUpdates(ACTIVITY_RECOGNITION_INTERVAL_MS, pendingIntent)
+        task.addOnSuccessListener { Log.e(MainActivity.TAG, "Activity recognition listener configured successfully") }
+        task.addOnFailureListener { Log.e(MainActivity.TAG, "Failed to configure activity recognition listener") }
     }
 
+    @Suppress("KotlinConstantConditions", "SENSELESS_COMPARISON")
     private fun getNewCalendarEvents() {
         val cal = Calendar.getInstance()
         cal[Calendar.YEAR] = 2022
@@ -264,7 +268,7 @@ class DataCollectionService : Service() {
                         CallLog.Calls.OUTGOING_TYPE -> "OUTGOING"
                         CallLog.Calls.INCOMING_TYPE -> "INCOMING"
                         CallLog.Calls.MISSED_TYPE -> "MISSED"
-                        else -> "N/A"
+                        else -> "UNKNOWN"
                     }
 
                     DatabaseHelper.saveCallLog(

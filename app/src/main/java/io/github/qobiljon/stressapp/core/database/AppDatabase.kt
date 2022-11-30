@@ -12,6 +12,7 @@ import io.github.qobiljon.stressapp.core.database.data.*
         Location::class,
         ScreenState::class,
         ActivityTransition::class,
+        ActivityRecognition::class,
         CallLog::class,
     ], version = 1
 )
@@ -21,5 +22,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationDao
     abstract fun screenStateDao(): ScreenStateDao
     abstract fun activityTransitionDao(): ActivityTransitionDao
+    abstract fun activityRecognitionDao(): ActivityRecognitionDao
     abstract fun callLogDao(): CallLogDao
 }

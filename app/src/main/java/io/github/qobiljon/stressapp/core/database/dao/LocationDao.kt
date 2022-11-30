@@ -11,9 +11,6 @@ interface LocationDao {
     @Query("SELECT * FROM location;")
     fun getAll(): List<Location>
 
-    @Query("SELECT * FROM location ORDER BY timestamp ASC LIMIT :k")
-    fun getK(k: Int): List<Location>
-
     @Query("SELECT EXISTS(SELECT 1 FROM location WHERE timestamp = :timestamp)")
     fun exists(timestamp: Long): Boolean
 

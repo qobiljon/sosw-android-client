@@ -8,14 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="2. 문제를 처리하는 능력에 대해 자신감을 느낀 적이 있었나요?"
-        android:textColor="@color/black"
         android:textSize="@dimen/ema_question_textsize" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Did you feel confident in your ability to handle problems?"
-        android:textColor="@color/black"
         android:textSize="@dimen/ema_question_eng_textsize" />
 
     <View

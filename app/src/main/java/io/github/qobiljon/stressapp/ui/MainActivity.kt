@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.widget.Button
 import android.widget.RadioGroup
 import androidx.activity.result.contract.ActivityResultContracts
@@ -219,7 +218,6 @@ class MainActivity : AppCompatActivity() {
 
         if (grantResults.isEmpty()) throw java.lang.RuntimeException("Empty permission results")
         if (requestCode == PERMISSION_REQUEST_CODE) {
-            Log.e("DATA", "GRANTED ${grantResults[0] == PackageManager.PERMISSION_GRANTED}")
             val missingPermissions = Companion.permissions.filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 Utils.toast(applicationContext, getString(R.string.permissions_toast))

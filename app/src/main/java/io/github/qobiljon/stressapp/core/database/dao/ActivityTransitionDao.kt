@@ -11,9 +11,6 @@ interface ActivityTransitionDao {
     @Query("SELECT * FROM activitytransition;")
     fun getAll(): List<ActivityTransition>
 
-    @Query("SELECT * FROM activitytransition ORDER BY timestamp ASC LIMIT :k")
-    fun getK(k: Int): List<ActivityTransition>
-
     @Insert
     fun insertAll(vararg activityTransition: ActivityTransition)
 

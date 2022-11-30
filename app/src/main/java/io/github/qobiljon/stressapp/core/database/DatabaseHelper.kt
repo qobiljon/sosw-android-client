@@ -52,9 +52,9 @@ object DatabaseHelper {
             }
             launch {
                 val dao = db.callLogDao()
-                for (callLog in dao.getAll()) {
+                for (callLog in dao.getFiltered(submitted = false)) {
                     val success = ApiHelper.submitCallLog(context, token = getAuthToken(context), callLog = callLog)
-                    if (success) dao.delete(callLog)
+                    if (success) dao.setSubmitted(submitted = true, timestamp = callLog.timestamp)
                 }
             }
             launch {
@@ -69,6 +69,13 @@ object DatabaseHelper {
                 for (activityTransition in dao.getAll()) {
                     val success = ApiHelper.submitActivityTransition(context, token = getAuthToken(context), activityTransition = activityTransition)
                     if (success) dao.delete(activityTransition)
+                }
+            }
+            launch {
+                val dao = db.activityRecognitionDao()
+                for (activityRecognition in dao.getAll()) {
+                    val success = ApiHelper.submitActivityRecognition(context, token = getAuthToken(context), activityRecognition = activityRecognition)
+                    if (success) dao.delete(activityRecognition)
                 }
             }
         }
@@ -112,6 +119,10 @@ object DatabaseHelper {
 
     fun saveActivityTransition(activityTransition: ActivityTransition) {
         db.activityTransitionDao().insertAll(activityTransition)
+    }
+
+    fun saveActivityRecognition(activityRecognition: ActivityRecognition) {
+        db.activityRecognitionDao().insertAll(activityRecognition)
     }
 
     fun saveCallLog(callLog: CallLog) {

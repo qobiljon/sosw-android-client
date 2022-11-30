@@ -8,12 +8,6 @@ import io.github.qobiljon.stressapp.core.database.data.CallLog
 
 @Dao
 interface CallLogDao {
-    @Query("SELECT * FROM calllog;")
-    fun getAll(): List<CallLog>
-
-    @Query("SELECT * FROM calllog ORDER BY timestamp ASC LIMIT :k")
-    fun getK(k: Int): List<CallLog>
-
     @Query("SELECT * FROM calllog WHERE submitted = :submitted ORDER BY timestamp")
     fun getFiltered(submitted: Boolean): List<CallLog>
 
