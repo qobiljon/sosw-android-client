@@ -1,7 +1,6 @@
 package io.github.qobiljon.stressapp.core.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import io.github.qobiljon.stressapp.core.database.data.CalendarEvent
@@ -19,7 +18,4 @@ interface CalendarEventDao {
 
     @Insert
     fun insertAll(vararg calendarEvent: CalendarEvent)
-
-    @Delete
-    fun delete(calendarEvent: CalendarEvent)
 }

@@ -1,7 +1,6 @@
 package io.github.qobiljon.stressapp.core.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import io.github.qobiljon.stressapp.core.database.data.CallLog
@@ -19,7 +18,4 @@ interface CallLogDao {
 
     @Insert
     fun insertAll(vararg callLog: CallLog)
-
-    @Delete
-    fun delete(callLog: CallLog)
 }

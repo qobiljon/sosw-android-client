@@ -3,10 +3,12 @@ package io.github.qobiljon.stressapp.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.google.android.gms.location.ActivityTransition
 import com.google.android.gms.location.ActivityTransitionResult
 import com.google.android.gms.location.DetectedActivity
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
+import io.github.qobiljon.stressapp.ui.MainActivity
 
 
 class ActivityTransitionReceiver : BroadcastReceiver() {
@@ -16,7 +18,8 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
             for (event in result!!.transitionEvents) {
                 val activity = parseActivityType(event.activityType)
                 val transition = parseTransitionType(event.transitionType)
-                // Log.e(MainActivity.TAG, "Activity transition: $activity, $transition")
+
+                Log.e(MainActivity.TAG, "Activity transition: $activity, $transition")
 
                 DatabaseHelper.saveActivityTransition(
                     io.github.qobiljon.stressapp.core.database.data.ActivityTransition(
