@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="2. 문제를 처리하는 능력에 대해 자신감을 느낀 적이 있었나요?"
+        android:text="2. 문제를 처리하는 능력에 대해 자신감을 느꼈나요?"
         android:textSize="@dimen/ema_question_textsize" />
 
     <TextView

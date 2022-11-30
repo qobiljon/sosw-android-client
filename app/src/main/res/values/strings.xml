@@ -23,14 +23,14 @@
     <string name="frequency4">매우 그렇다 / strongly agree</string>
     <string name="na">N/A</string>
 
-    <string name="stresslvl0">Not stressed</string>
+    <string name="stresslvl0">Not stressed at all</string>
     <string name="stresslvl1">Slightly stressed</string>
-    <string name="stresslvl2">Somewhat stressed</string>
-    <string name="stresslvl3">Moderately stressed</string>
+    <string name="stresslvl2">Moderately stressed</string>
+    <string name="stresslvl3">Very stressed</string>
     <string name="stresslvl4">Extremely stressed</string>
 
-    <string name="socialsettings_asocial">👤 Asocial (no social interaction with anyone)</string>
-    <string name="socialsettings_social">👥 Social (engaging in an activity with someone)</string>
+    <string name="socialsettings_asocial">👤 Asocial (not likely to communicate with anyone)</string>
+    <string name="socialsettings_social">👥 Social (likely to or already communicating with someone)</string>
 
     <string name="location_home">🏠 Home (home, dorm)</string>
     <string name="location_work">🏢 Work (lab, office)</string>
@@ -81,6 +81,7 @@
     <string name="passwords_dont_match">비밀번호가 일치하지 않습니다.</string>
     <string name="no_account_prompt">계정이 없으신가요?</string>
     <string name="yes_account_prompt">계정이 이미 있으시면</string>
+    <string name="ema_top_hint">(Q1–5) 최근 1–2 시간에 느꼈던 감정이나 생각을 평가해주세요.</string>
 
     <string-array name="gender_options" translatable="false">
         <item>남자</item>

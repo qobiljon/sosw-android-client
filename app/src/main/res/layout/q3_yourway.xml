@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="3. 자신의 뜻대로 일이 진행된다고 느낀 적이 있었나요?"
+        android:text="3. 자신의 뜻대로 일이 진행된다고 느꼈나요?"
         android:textSize="@dimen/ema_question_textsize" />
 
     <TextView
