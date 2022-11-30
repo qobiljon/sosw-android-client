@@ -32,9 +32,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ema_box_spacing"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingBottom="@dimen/ema_box_spacing">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/ema_top_hint" />
 
             <!--        PSS-4 Korean version taken from https://www.cmu.edu/dietrich/psychology/stress-immunity-disease-lab/scales/pdf/pss_10_korean.pdf-->
 

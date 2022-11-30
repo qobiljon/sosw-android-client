@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="5. 현재 느끼는 스트레스 수준을 평가해 주십시오."
+        android:text="5. 느끼는 스트레스 수준을 평가해 주십시오."
         android:textSize="@dimen/ema_question_textsize" />
 
     <TextView
