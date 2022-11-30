@@ -9,14 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1. 중요한 일들을 통제할 수 없다고 느낀 적이 있었나요?"
-        android:textColor="@color/black"
         android:textSize="@dimen/ema_question_textsize" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Did you feel you could not control important things?"
-        android:textColor="@color/black"
         android:textSize="@dimen/ema_question_eng_textsize" />
 
     <View

@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "io.github.qobiljon.stressapp"
-        minSdk 28
+        minSdk 29
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -82,4 +82,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.0.2')
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.0'
+
+    // location
+    implementation "com.google.android.gms:play-services-location:21.0.1"
 }

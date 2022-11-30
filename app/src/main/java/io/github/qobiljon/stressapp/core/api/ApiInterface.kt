@@ -20,4 +20,22 @@ interface ApiInterface {
 
     @POST("submit_self_report")
     suspend fun submitSelfReport(@Header("Authorization") token: String, @Body submitSelfReportRequest: SubmitSelfReportRequest): Response<Void>
+
+    @POST("submit_location")
+    suspend fun submitLocation(@Header("Authorization") token: String, @Body submitLocationRequest: SubmitLocationRequest): Response<Void>
+
+    @POST("submit_call_log")
+    suspend fun submitCallLog(@Header("Authorization") token: String, @Body submitCallLogRequest: SubmitCallLogRequest): Response<Void>
+
+    @POST("submit_calendar_event")
+    suspend fun submitCalendarEvent(@Header("Authorization") token: String, @Body submitCalendarEventRequest: SubmitCalendarEventRequest): Response<Void>
+
+    @POST("submit_activity_transition")
+    suspend fun submitActivityTransition(@Header("Authorization") token: String, @Body submitActivityTransitionRequest: SubmitActivityTransitionRequest): Response<Void>
+
+    @POST("submit_activity_recognition")
+    suspend fun submitActivityRecognition(@Header("Authorization") token: String, @Body submitActivityRecognitionRequest: SubmitActivityRecognitionRequest): Response<Void>
+
+    @POST("submit_screen_state")
+    suspend fun submitScreenState(@Header("Authorization") token: String, @Body submitScreenStateRequest: SubmitScreenStateRequest): Response<Void>
 }
