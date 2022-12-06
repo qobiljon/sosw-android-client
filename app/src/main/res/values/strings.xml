@@ -32,7 +32,7 @@
     <string name="socialsettings_asocial">👤 Asocial (not likely to communicate with anyone)</string>
     <string name="socialsettings_social">👥 Social (likely to or already communicating with someone)</string>
 
-    <string name="location_home">🏠 Home (home, dorm)</string>
+    <string name="location_home">🏠 집 (home, dorm)</string>
     <string name="location_work">🏢 Work (lab, office)</string>
     <string name="location_restaurant">🍽️ Restaurant (restaurant, cafe, bar)</string>
     <string name="location_vehicle">🚗🚌 Vehicle (car, taxi, bus, train)</string>
