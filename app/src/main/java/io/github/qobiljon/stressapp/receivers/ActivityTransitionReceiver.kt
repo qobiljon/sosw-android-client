@@ -24,8 +24,8 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
                 DatabaseHelper.saveActivityTransition(
                     io.github.qobiljon.stressapp.core.database.data.ActivityTransition(
                         timestamp = System.currentTimeMillis(),
-                        activity = activity,
-                        transition = transition,
+                        activity = "$activity",
+                        transition = "$transition",
                     )
                 )
             }

@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             val binder = service as DataCollectionService.LocalBinder
             collectSvc = binder.getService
 
-            if (!binder.getService.isRunning) {
+            if (!DataCollectionService.isRunning) {
                 val intent = Intent(applicationContext, DataCollectionService::class.java)
                 startForegroundService(intent)
             }

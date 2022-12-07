@@ -76,7 +76,7 @@
     <string name="gender">성별</string>
     <string name="fix_date_toast">날짜 형식을 확인해주세요! (YYYMMDD)</string>
     <string name="password">비밀번호</string>
-    <string name="dummy_password_hint" translatable="false">***</string>
+    <string name="dummy_password_hint" translatable="false">******** (8수)</string>
     <string name="repeat_password">비밀번호 재확인</string>
     <string name="passwords_dont_match">비밀번호가 일치하지 않습니다.</string>
     <string name="no_account_prompt">계정이 없으신가요?</string>

@@ -33,9 +33,9 @@ class DataCollectionService : Service() {
         private const val CALLS_CALENDAR_SAMPLING_INTERVAL_MS = 60 * 60 * 1000L
         private const val ACTIVITY_RECOGNITION_INTERVAL_MS = 10 * 1000L
         private const val LOCATION_INTERVAL_MS = 60 * 1000L
+        var isRunning = false
     }
 
-    var isRunning = false
     private val mBinder: IBinder = LocalBinder()
     private val executor = Executors.newScheduledThreadPool(10)
 
@@ -76,8 +76,15 @@ class DataCollectionService : Service() {
             isRunning = true
 
             executor.scheduleAtFixedRate({
-                getNewCalendarEvents() // calendar data
-                getNewCalls() // call logs
+                try {
+                    getNewCalendarEvents() // calendar data
+                } catch (_: RuntimeException) {
+                }
+
+                try {
+                    getNewCalls() // call logs
+                } catch (_: RuntimeException) {
+                }
             }, 0L, CALLS_CALENDAR_SAMPLING_INTERVAL_MS, TimeUnit.MILLISECONDS)
 
             setUpLocationListener() // location listener
@@ -200,7 +207,6 @@ class DataCollectionService : Service() {
                 CalendarContract.Events.ORIGINAL_ID,
                 CalendarContract.Events.TITLE,
                 CalendarContract.Events.DTSTART,
-                CalendarContract.Events.DURATION,
                 CalendarContract.Events.DTEND,
                 CalendarContract.Events.EVENT_LOCATION,
             ),
@@ -221,17 +227,19 @@ class DataCollectionService : Service() {
                 val startTs = it.getLong(startDateIdx)
                 val eventId = "${it.getString(originalIdIdx)}_${startTs}"
                 val endTs = it.getLong(endDateIdx)
-                val eventLocation = it.getString(eventLocationIdx)
-                if (title != null && startTs != null && endTs != null) if (!dao.exists(eventId = eventId)) dao.insertAll(
-                    CalendarEvent(
-                        event_id = eventId,
-                        title = title,
-                        start_ts = startTs,
-                        end_ts = endTs,
-                        event_location = eventLocation,
-                        submitted = false,
+                val eventLocation = it.getString(eventLocationIdx) ?: ""
+
+                if (title != null && startTs != null && endTs != null)
+                    if (!dao.exists(eventId = eventId)) dao.insertAll(
+                        CalendarEvent(
+                            event_id = eventId,
+                            title = title,
+                            start_ts = startTs,
+                            end_ts = endTs,
+                            event_location = eventLocation,
+                            submitted = false,
+                        )
                     )
-                )
             } while (it.moveToNext())
         }
     }
