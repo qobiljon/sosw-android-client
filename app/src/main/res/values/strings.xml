@@ -16,41 +16,41 @@
 
     <string name="permissions_toast">필요한 권한을 부여하십시오!</string>
 
-    <string name="frequency0">전혀 그렇지 않다 / strongly disagree</string>
-    <string name="frequency1">그렇지 않다 / disagree </string>
-    <string name="frequency2">보통이다 / neither agree nor disagree</string>
-    <string name="frequency3">그렇다 / agree</string>
-    <string name="frequency4">매우 그렇다 / strongly agree</string>
+    <string name="frequency0">전혀 그렇지 않다</string>
+    <string name="frequency1">그렇지 않다</string>
+    <string name="frequency2">보통이다</string>
+    <string name="frequency3">그렇다</string>
+    <string name="frequency4">매우 그렇다</string>
     <string name="na">N/A</string>
 
-    <string name="stresslvl0">스트레스를 전혀 받지 않았다 / Not stressed at all</string>
-    <string name="stresslvl1">스트레스를 별로 받지 않았다 / Slightly stressed</string>
-    <string name="stresslvl2">스트레스를 조금 받았다 / Moderately stressed</string>
-    <string name="stresslvl3">스트레스를 많이 받았다 / Very stressed</string>
-    <string name="stresslvl4">스트레스를 매우 많이 받았다 / Extremely stressed</string>
+    <string name="stresslvl0">스트레스를 전혀 받지 않았다</string>
+    <string name="stresslvl1">스트레스를 별로 받지 않았다</string>
+    <string name="stresslvl2">스트레스를 조금 받았다</string>
+    <string name="stresslvl3">스트레스를 많이 받았다</string>
+    <string name="stresslvl4">스트레스를 매우 많이 받았다</string>
 
-    <string name="socialsettings_asocial">👤 비사교적 (누군가와 소통할 가능성이 없는) / Asocial (not likely to communicate with anyone)</string>
-    <string name="socialsettings_social">👥 사교적 (누군가와 소통할 가능성이 있거나 이미 소통하고 있는) / Social (likely to or already communicating with someone)</string>
+    <string name="socialsettings_asocial">👤 비사교적 (누군가와 소통할 가능성이 없는)</string>
+    <string name="socialsettings_social">👥 사교적 (누군가와 소통할 가능성이 있거나 이미 소통하고 있는)</string>
 
-    <string name="location_home">🏠 집 (집, 기숙사 등) / Home (home, dorm)</string>
-    <string name="location_work">🏢 직장 (연구실, 사무실 등) / Work (lab, office)</string>
-    <string name="location_restaurant">🍽️ 식당 (음식점, 카페, 술집 등) / Restaurant (restaurant, cafe, bar)</string>
-    <string name="location_vehicle">🚗🚌 이동 수단 (자동차, 택시, 버스, 지하철 등) / Vehicle (car, taxi, bus, train)</string>
-    <string name="location_other">기타 (영화관, 호텔 등) / Other (cinema, hotel)</string>
+    <string name="location_home">🏠 집 (집, 기숙사 등)</string>
+    <string name="location_work">🏢 직장 (연구실, 사무실 등)</string>
+    <string name="location_restaurant">🍽️ 식당 (음식점, 카페, 술집 등)</string>
+    <string name="location_vehicle">🚗🚌 이동 수단 (자동차, 택시, 버스, 지하철 등)</string>
+    <string name="location_other">기타 (영화관, 호텔 등)</string>
 
-    <string name="activity_working">📚 공부/일 (과제, 연구실 업무 등) / Studying/working (doing assignment, lab work)</string>
-    <string name="activity_sleeping">😴 수면 (침대에서 취침, 낮잠 등) / Sleeping (sleeping in bed, taking a nap)</string>
-    <string name="activity_resting">🧘 휴식 (침대에서 휴식, 스마트폰 사용 등) / Relaxing (chilling in bed, using smartphone)</string>
-    <string name="activity_watching">🎦 비디오 시청 (유튜브 시청, TV 시청 등) / Video watching (watching Youtube, watching TV)</string>
-    <string name="activity_class">👩‍🏫 수업/회의 (회의 참석, 수업 수강 등) / Class/meeting (having a meeting, taking a class)</string>
-    <string name="activity_eating">🍽️☕️ 식사 그리고/또는 음료 섭취 (점심, 저녁, 커피 등) / Eating and/or drinking (lunch/dining, drinking coffee)</string>
-    <string name="activity_gaming">🎮 게임 (PC 게임, 모바일 게임 등) / Gaming (playing PC game, mobile game)</string>
-    <string name="activity_conversing">👥 대화 (가족과의 대화, 친구와의 수다 등) / Conversing (chatting with family, talking with a friend)</string>
-    <string name="activity_goingbed">🛏️ 취침 준비 (취침 준비 등) / Getting ready for bed (getting ready for bed)</string>
-    <string name="activity_calling">💬 전화/문자 (전화 통화, 온라인 채팅 등) / Calling/texting (making phone call, online chatting)</string>
-    <string name="activity_justwokeup">⏰ 잠에서 깬 직후 (침대에서 막 눈을 뜬 상황 등) / Right after waking up (just opened eyes in bed)</string>
-    <string name="activity_driving">🚲🚗 운전 (자동차 운전, 자전거 타기 등) Driving (driving a car, riding a bicycle)</string>
-    <string name="activity_other">기타 (머리 깎기, 내시경 검사 받기 등) / Other (getting haircut, getting an endoscopy)</string>
+    <string name="activity_working">📚 공부/일 (과제, 연구실 업무 등)</string>
+    <string name="activity_sleeping">😴 수면 (침대에서 취침, 낮잠 등)</string>
+    <string name="activity_resting">🧘 휴식 (침대에서 휴식, 스마트폰 사용 등)</string>
+    <string name="activity_watching">🎦 비디오 시청 (유튜브 시청, TV 시청 등)</string>
+    <string name="activity_class">👩‍🏫 수업/회의 (회의 참석, 수업 수강 등)</string>
+    <string name="activity_eating">🍽️☕️ 식사 그리고/또는 음료 섭취 (점심, 저녁, 커피 등)</string>
+    <string name="activity_gaming">🎮 게임 (PC 게임, 모바일 게임 등)</string>
+    <string name="activity_conversing">👥 대화 (가족과의 대화, 친구와의 수다 등)</string>
+    <string name="activity_goingbed">🛏️ 취침 준비 (취침 준비 등)</string>
+    <string name="activity_calling">💬 전화/문자 (전화 통화, 온라인 채팅 등)</string>
+    <string name="activity_justwokeup">⏰ 잠에서 깬 직후 (침대에서 막 눈을 뜬 상황 등)</string>
+    <string name="activity_driving">🚲🚗 운전 (자동차 운전, 자전거 타기 등)</string>
+    <string name="activity_other">기타 (머리 자르기, 내시경 검사 받기 등)</string>
 
     <string name="q1_pss_control">1. How often have you felt that you were unable to control the important things?</string>
     <string name="q2_pss_confident">2. How often have you felt confident about your ability to handle problems?</string>
