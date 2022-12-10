@@ -13,9 +13,8 @@ import io.github.qobiljon.stressapp.ui.MainActivity
 
 class ActivityTransitionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent) {
-        if (ActivityTransitionResult.hasResult(intent)) {
-            val result = ActivityTransitionResult.extractResult(intent)
-            for (event in result!!.transitionEvents) {
+        if (ActivityTransitionResult.hasResult(intent)) ActivityTransitionResult.extractResult(intent)?.let { result ->
+            for (event in result.transitionEvents) {
                 val activity = parseActivityType(event.activityType)
                 val transition = parseTransitionType(event.transitionType)
 
@@ -24,15 +23,15 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
                 DatabaseHelper.saveActivityTransition(
                     io.github.qobiljon.stressapp.core.database.data.ActivityTransition(
                         timestamp = System.currentTimeMillis(),
-                        activity = "$activity",
-                        transition = "$transition",
+                        activity = activity,
+                        transition = transition,
                     )
                 )
             }
         }
     }
 
-    private fun parseActivityType(activity: Int): String {
+    private fun parseActivityType(activity: Int?): String {
         return when (activity) {
             DetectedActivity.IN_VEHICLE -> "IN_VEHICLE"
             DetectedActivity.ON_BICYCLE -> "ON_BICYCLE"
@@ -44,7 +43,7 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun parseTransitionType(transitionType: Int): String {
+    private fun parseTransitionType(transitionType: Int?): String {
         return when (transitionType) {
             ActivityTransition.ACTIVITY_TRANSITION_ENTER -> "ENTER"
             ActivityTransition.ACTIVITY_TRANSITION_EXIT -> "EXIT"
