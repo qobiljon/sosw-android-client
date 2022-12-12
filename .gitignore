@@ -186,3 +186,10 @@ cython_debug/
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
+
+
+# android builds
+app/build
+app/debug
+app/release
+app/schemas
