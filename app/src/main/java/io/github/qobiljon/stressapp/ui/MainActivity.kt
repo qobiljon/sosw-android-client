@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
         btnSubmit.setOnClickListener {
             val q1to5 = mutableListOf(0, 0, 0, 0, 0)
-            for (i in 0 until 4) q1to5[i] = when (rgQuestions[i].checkedRadioButtonId) {
+            for (i in 0 until 5) q1to5[i] = when (rgQuestions[i].checkedRadioButtonId) {
                 R.id.rbFrequency0 -> 0
                 R.id.rbFrequency1 -> 1
                 R.id.rbFrequency2 -> 2
@@ -184,8 +184,7 @@ class MainActivity : AppCompatActivity() {
         else runServices()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
