@@ -13,6 +13,7 @@ import android.widget.RadioGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.api.ApiHelper
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     companion object {
         private const val PERMISSION_REQUEST_CODE = 101
