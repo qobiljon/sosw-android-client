@@ -22,7 +22,7 @@ class AuthActivity : AppCompatActivity() {
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_auth)
+        setContentView(binding.root)
         setupView()
 
         ArrayAdapter.createFromResource(this, R.array.gender_options, android.R.layout.simple_spinner_item).also {

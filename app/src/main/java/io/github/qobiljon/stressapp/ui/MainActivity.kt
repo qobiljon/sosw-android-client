@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         rgQuestions = listOf<RadioGroup>(
             findViewById(R.id.rgQuestion1),
