@@ -15,7 +15,7 @@ interface LocationDao {
     fun exists(timestamp: Long): Boolean
 
     @Insert
-    fun insertAll(vararg location: Location)
+    fun insertAll(locations: List<Location>)
 
     @Delete
     fun delete(location: Location)

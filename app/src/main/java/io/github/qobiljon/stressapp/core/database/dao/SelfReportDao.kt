@@ -8,11 +8,11 @@ import io.github.qobiljon.stressapp.core.database.data.SelfReport
 
 @Dao
 interface SelfReportDao {
-    @Query("SELECT * FROM selfreport;")
+    @Query("SELECT * FROM selfreport")
     fun getAll(): List<SelfReport>
 
     @Insert
-    fun insertAll(vararg selfReports: SelfReport)
+    fun insertAll(selfReports: List<SelfReport>)
 
     @Delete
     fun delete(selfReport: SelfReport)

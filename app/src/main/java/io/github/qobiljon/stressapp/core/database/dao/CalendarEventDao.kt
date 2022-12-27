@@ -17,5 +17,5 @@ interface CalendarEventDao {
     fun setSubmitted(submitted: Boolean, eventId: String)
 
     @Insert
-    fun insertAll(vararg calendarEvent: CalendarEvent)
+    fun insertAll(calendarEvents: List<CalendarEvent>)
 }

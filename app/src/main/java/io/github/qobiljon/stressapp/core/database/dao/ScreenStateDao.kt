@@ -12,7 +12,7 @@ interface ScreenStateDao {
     fun getAll(): List<ScreenState>
 
     @Insert
-    fun insertAll(vararg screenState: ScreenState)
+    fun insertAll(screenStates: List<ScreenState>)
 
     @Delete
     fun delete(screenState: ScreenState)
