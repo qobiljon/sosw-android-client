@@ -17,6 +17,7 @@ import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.api.ApiHelper
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
 import io.github.qobiljon.stressapp.core.database.data.SelfReport
+import io.github.qobiljon.stressapp.databinding.ActivityMainBinding
 import io.github.qobiljon.stressapp.services.DataCollectionService
 import io.github.qobiljon.stressapp.services.DataSubmissionService
 import io.github.qobiljon.stressapp.utils.Utils
@@ -26,6 +27,9 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     companion object {
         private const val PERMISSION_REQUEST_CODE = 101
         private const val REQUEST_CODE_AUTH = 102
@@ -81,15 +85,21 @@ class MainActivity : AppCompatActivity() {
             submitSvcBound = false
         }
     }
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        if (!isGranted) {
-            // TODO: Inform user that that your app will not show notifications.
-            Utils.toast(applicationContext, "Problem with PUSH notifications, please report this case to researchers!")
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (!isGranted) {
+                // TODO: Inform user that that your app will not show notifications.
+                Utils.toast(
+                    applicationContext,
+                    "Problem with PUSH notifications, please report this case to researchers!"
+                )
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(R.layout.activity_main)
 
         rgQuestions = listOf<RadioGroup>(
@@ -180,11 +190,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        @Suppress("DEPRECATION") if (!DatabaseHelper.isAuthenticated(applicationContext)) startActivityForResult(Intent(applicationContext, AuthActivity::class.java), REQUEST_CODE_AUTH)
+        @Suppress("DEPRECATION") if (!DatabaseHelper.isAuthenticated(applicationContext)) startActivityForResult(
+            Intent(
+                applicationContext,
+                AuthActivity::class.java
+            ), REQUEST_CODE_AUTH
+        )
         else runServices()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
@@ -196,6 +215,10 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == 12) runServices()
             else finishAffinity()
         }
+    }
+
+    private fun setupView() {
+
     }
 
     override fun onResume() {
@@ -218,7 +241,8 @@ class MainActivity : AppCompatActivity() {
 
         if (grantResults.isEmpty()) throw java.lang.RuntimeException("Empty permission results")
         if (requestCode == PERMISSION_REQUEST_CODE) {
-            val missingPermissions = Companion.permissions.filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
+            val missingPermissions =
+                Companion.permissions.filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 Utils.toast(applicationContext, getString(R.string.permissions_toast))
                 finishAffinity()
