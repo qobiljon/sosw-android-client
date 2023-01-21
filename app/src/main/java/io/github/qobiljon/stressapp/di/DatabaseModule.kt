@@ -6,13 +6,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.database.AppDatabase
 import io.github.qobiljon.stressapp.core.database.dao.*
 import javax.inject.Singleton
 
 @Module
-@InstallIn(Singleton::class)
+@InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
     @Provides
