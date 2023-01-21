@@ -20,12 +20,16 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
 
                 Log.e(MainActivity.TAG, "Activity transition: $activity, $transition")
 
+                // It will change in the future
                 DatabaseHelper.saveActivityTransition(
-                    io.github.qobiljon.stressapp.core.database.data.ActivityTransition(
-                        timestamp = System.currentTimeMillis(),
-                        activity = activity,
-                        transition = transition,
+                    listOf(
+                        io.github.qobiljon.stressapp.core.database.data.ActivityTransition(
+                            timestamp = System.currentTimeMillis(),
+                            activity = activity,
+                            transition = transition,
+                        )
                     )
+
                 )
             }
         }
