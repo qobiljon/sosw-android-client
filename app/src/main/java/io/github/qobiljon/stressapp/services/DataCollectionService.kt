@@ -112,12 +112,13 @@ class DataCollectionService : Service() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
         fusedLocationClient.lastLocation.addOnSuccessListener { l ->
             if (l != null) DatabaseHelper.saveLocation(
-                Location(
+
+                listOf( Location(
                     timestamp = l.time,
                     latitude = l.latitude,
                     longitude = l.longitude,
                     accuracy = l.accuracy,
-                )
+                ))
             )
         }
 
@@ -134,12 +135,12 @@ class DataCollectionService : Service() {
                 locationResult.locations.forEach { l ->
                     if (l != null) {
                         DatabaseHelper.saveLocation(
-                            Location(
+                            listOf(Location(
                                 timestamp = l.time,
                                 latitude = l.latitude,
                                 longitude = l.longitude,
                                 accuracy = l.accuracy,
-                            )
+                            ))
                         )
                     }
                 }
@@ -283,13 +284,13 @@ class DataCollectionService : Service() {
                     }
 
                     DatabaseHelper.saveCallLog(
-                        io.github.qobiljon.stressapp.core.database.data.CallLog(
-                            timestamp = timestamp,
-                            number = number,
-                            duration = duration,
-                            call_type = _callType,
-                            submitted = false,
-                        )
+                       listOf( io.github.qobiljon.stressapp.core.database.data.CallLog(
+                           timestamp = timestamp,
+                           number = number,
+                           duration = duration,
+                           call_type = _callType,
+                           submitted = false,
+                       ))
                     )
                 }
             } while (it.moveToNext())
