@@ -105,27 +105,29 @@ object DatabaseHelper {
         getSharedPreferences(context).edit { putString(KEY_FCM_TOKEN, fcmToken) }
     }
 
-    fun saveSelfReport(selfReport: SelfReport) {
+    fun saveSelfReport(selfReport: List<SelfReport>) {
         db.selfReportDao().insertAll(selfReport)
     }
 
-    fun saveLocation(location: Location) {
-        if (!db.locationDao().exists(location.timestamp)) db.locationDao().insertAll(location)
+    fun saveLocation(location: List<Location>) {
+        val timestamp = location.first().timestamp
+        if (!db.locationDao().exists(timestamp)) db.locationDao().insertAll(location)
     }
 
-    fun saveScreenState(screenState: ScreenState) {
+    fun saveScreenState(screenState: List<ScreenState>) {
         db.screenStateDao().insertAll(screenState)
     }
 
-    fun saveActivityTransition(activityTransition: ActivityTransition) {
+    fun saveActivityTransition(activityTransition: List<ActivityTransition>) {
         db.activityTransitionDao().insertAll(activityTransition)
     }
 
-    fun saveActivityRecognition(activityRecognition: ActivityRecognition) {
+    fun saveActivityRecognition(activityRecognition: List<ActivityRecognition>) {
         db.activityRecognitionDao().insertAll(activityRecognition)
     }
 
-    fun saveCallLog(callLog: CallLog) {
-        if (!db.callLogDao().exists(callLog.timestamp)) db.callLogDao().insertAll(callLog)
+    fun saveCallLog(callLog: List<CallLog>) {
+        val timestamp = callLog.first().timestamp
+        if (!db.callLogDao().exists(timestamp)) db.callLogDao().insertAll(callLog)
     }
 }
