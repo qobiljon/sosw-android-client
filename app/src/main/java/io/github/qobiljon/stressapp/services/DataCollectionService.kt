@@ -14,6 +14,7 @@ import android.provider.CalendarContract
 import android.provider.CallLog
 import android.util.Log
 import com.google.android.gms.location.*
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
 import io.github.qobiljon.stressapp.core.database.data.CalendarEvent
@@ -28,6 +29,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
+@AndroidEntryPoint
 class DataCollectionService : Service() {
     companion object {
         private const val CALLS_CALENDAR_SAMPLING_INTERVAL_MS = 60 * 60 * 1000L
@@ -110,12 +112,13 @@ class DataCollectionService : Service() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
         fusedLocationClient.lastLocation.addOnSuccessListener { l ->
             if (l != null) DatabaseHelper.saveLocation(
-                Location(
+
+                listOf( Location(
                     timestamp = l.time,
                     latitude = l.latitude,
                     longitude = l.longitude,
                     accuracy = l.accuracy,
-                )
+                ))
             )
         }
 
@@ -132,12 +135,12 @@ class DataCollectionService : Service() {
                 locationResult.locations.forEach { l ->
                     if (l != null) {
                         DatabaseHelper.saveLocation(
-                            Location(
+                            listOf(Location(
                                 timestamp = l.time,
                                 latitude = l.latitude,
                                 longitude = l.longitude,
                                 accuracy = l.accuracy,
-                            )
+                            ))
                         )
                     }
                 }
@@ -191,7 +194,7 @@ class DataCollectionService : Service() {
         task.addOnFailureListener { Log.e(MainActivity.TAG, "Failed to configure activity recognition listener") }
     }
 
-    @Suppress("KotlinConstantConditions", "SENSELESS_COMPARISON")
+    @Suppress("SENSELESS_COMPARISON")
     private fun getNewCalendarEvents() {
         val cal = Calendar.getInstance()
         cal[Calendar.YEAR] = 2022
@@ -228,17 +231,18 @@ class DataCollectionService : Service() {
                 val eventId = "${it.getString(originalIdIdx)}_${startTs}"
                 val endTs = it.getLong(endDateIdx)
                 val eventLocation = it.getString(eventLocationIdx) ?: ""
+                val event =  CalendarEvent(
+                    event_id = eventId,
+                    title = title,
+                    start_ts = startTs,
+                    end_ts = endTs,
+                    event_location = eventLocation,
+                    submitted = false,
+                )
 
                 if (title != null && startTs != null && endTs != null)
                     if (!dao.exists(eventId = eventId)) dao.insertAll(
-                        CalendarEvent(
-                            event_id = eventId,
-                            title = title,
-                            start_ts = startTs,
-                            end_ts = endTs,
-                            event_location = eventLocation,
-                            submitted = false,
-                        )
+                       listOf(event)
                     )
             } while (it.moveToNext())
         }
@@ -280,13 +284,13 @@ class DataCollectionService : Service() {
                     }
 
                     DatabaseHelper.saveCallLog(
-                        io.github.qobiljon.stressapp.core.database.data.CallLog(
-                            timestamp = timestamp,
-                            number = number,
-                            duration = duration,
-                            call_type = _callType,
-                            submitted = false,
-                        )
+                       listOf( io.github.qobiljon.stressapp.core.database.data.CallLog(
+                           timestamp = timestamp,
+                           number = number,
+                           duration = duration,
+                           call_type = _callType,
+                           submitted = false,
+                       ))
                     )
                 }
             } while (it.moveToNext())

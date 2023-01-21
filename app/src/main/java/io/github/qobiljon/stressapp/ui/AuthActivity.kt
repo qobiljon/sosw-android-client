@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.api.ApiHelper
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
@@ -13,6 +14,7 @@ import io.github.qobiljon.stressapp.utils.Utils
 import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding

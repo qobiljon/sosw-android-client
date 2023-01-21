@@ -12,7 +12,7 @@ interface ActivityTransitionDao {
     fun getAll(): List<ActivityTransition>
 
     @Insert
-    fun insertAll(vararg activityTransition: ActivityTransition)
+    fun insertAll(activityTransitions: List<ActivityTransition>)
 
     @Delete
     fun delete(activityTransition: ActivityTransition)

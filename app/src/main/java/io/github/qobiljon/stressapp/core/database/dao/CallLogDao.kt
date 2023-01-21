@@ -17,5 +17,5 @@ interface CallLogDao {
     fun setSubmitted(submitted: Boolean, timestamp: Long)
 
     @Insert
-    fun insertAll(vararg callLog: CallLog)
+    fun insertAll(callLogs: List<CallLog>)
 }

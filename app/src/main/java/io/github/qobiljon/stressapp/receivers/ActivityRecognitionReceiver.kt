@@ -13,17 +13,21 @@ import io.github.qobiljon.stressapp.ui.MainActivity
 
 class ActivityRecognitionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent) {
-        if (ActivityRecognitionResult.hasResult(intent)) ActivityRecognitionResult.extractResult(intent)?.let { result ->
+        if (ActivityRecognitionResult.hasResult(intent)) ActivityRecognitionResult.extractResult(
+            intent
+        )?.let { result ->
             val activity = parseActivityType(result.mostProbableActivity.type)
             val confidence = result.mostProbableActivity.confidence ?: 0 // 0 to 100 likelihood
 
             Log.e(MainActivity.TAG, "Activity recognition: $activity, $confidence")
 
             DatabaseHelper.saveActivityRecognition(
-                ActivityRecognition(
-                    timestamp = System.currentTimeMillis(),
-                    activity = activity,
-                    confidence = confidence,
+                listOf(
+                    ActivityRecognition(
+                        timestamp = System.currentTimeMillis(),
+                        activity = activity,
+                        confidence = confidence,
+                    )
                 )
             )
         }

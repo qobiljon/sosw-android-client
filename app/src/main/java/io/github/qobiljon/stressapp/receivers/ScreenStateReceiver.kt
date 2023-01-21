@@ -25,12 +25,16 @@ class ScreenStateReceiver : BroadcastReceiver() {
 
             Log.e(MainActivity.TAG, "$timestamp, $screenState, $restrictedInputMode")
 
+            // It will change in the future
             DatabaseHelper.saveScreenState(
-                ScreenState(
-                    timestamp = timestamp,
-                    screen_state = screenState,
-                    keyguard_restricted_input_mode = restrictedInputMode,
+                listOf(
+                    ScreenState(
+                        timestamp = timestamp,
+                        screen_state = screenState,
+                        keyguard_restricted_input_mode = restrictedInputMode,
+                    )
                 )
+
             )
         }
     }

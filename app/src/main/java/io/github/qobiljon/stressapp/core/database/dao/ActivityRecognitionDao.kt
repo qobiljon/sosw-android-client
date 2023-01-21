@@ -8,11 +8,11 @@ import io.github.qobiljon.stressapp.core.database.data.ActivityRecognition
 
 @Dao
 interface ActivityRecognitionDao {
-    @Query("SELECT * FROM activityrecognition;")
+    @Query("SELECT * FROM activity_recognition_table_name")
     fun getAll(): List<ActivityRecognition>
 
     @Insert
-    fun insertAll(vararg activityRecognition: ActivityRecognition)
+    fun insertAll(activityRecognitions: List<ActivityRecognition>)
 
     @Delete
     fun delete(activityRecognition: ActivityRecognition)

@@ -13,6 +13,7 @@ import android.widget.RadioGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.qobiljon.stressapp.R
 import io.github.qobiljon.stressapp.core.api.ApiHelper
 import io.github.qobiljon.stressapp.core.database.DatabaseHelper
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -184,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                         token = DatabaseHelper.getAuthToken(context),
                         selfReport = selfReport,
                     )
-                    if (!success) DatabaseHelper.saveSelfReport(selfReport)
+                    if (!success) DatabaseHelper.saveSelfReport(listOf(selfReport))
                     cleanUp()
                 }
             }
