@@ -175,7 +175,7 @@ class MainActivity : AppCompatActivity() {
                         token = DatabaseHelper.getAuthToken(context),
                         selfReport = selfReport,
                     )
-                    if (!success) DatabaseHelper.saveSelfReport(selfReport)
+                    if (!success) DatabaseHelper.saveSelfReport(listOf(selfReport))
                     cleanUp()
                 }
             }
